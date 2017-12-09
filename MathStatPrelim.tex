@@ -1,0 +1,1684 @@
+
+\documentclass[12pt]{report} \addtolength{\textheight}{2in}
+\addtolength{\topmargin}{-1in} \addtolength{\textwidth}{1.25in}
+\addtolength{\oddsidemargin}{-.5in} \addtolength{\evensidemargin}{-.5in}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{mathrsfs}
+\usepackage{amsthm}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{tabularx}
+\usepackage{textcomp}
+\usepackage{enumerate}
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
+\lstset{
+	backgroundcolor=\color{lbcolor},
+	tabsize=4,
+	rulecolor=,
+	language=matlab,
+        basicstyle=\scriptsize,
+        upquote=true,
+        aboveskip={1.5\baselineskip},
+        columns=fixed,
+        showstringspaces=false,
+        extendedchars=true,
+        breaklines=true,
+        prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+        frame=single,
+        showtabs=false,
+        showspaces=false,
+        showstringspaces=false,
+        identifierstyle=\ttfamily,
+        keywordstyle=\color[rgb]{0,0,1},
+        commentstyle=\color[rgb]{0.133,0.545,0.133},
+        stringstyle=\color[rgb]{0.627,0.126,0.941},
+}
+\newtheorem{claim}{Claim}
+\newtheorem{cor}{Corollary}
+\newtheorem{defn}{Definition}
+\newtheorem{axiom}{Axiom}
+\newtheorem{prop}{Proposition}
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newcommand{\rational}{\mathbb{Q}}
+\newcommand{\Borel}{\mathscr{B}}
+\newcommand{\Borelint}{\mathcal{L}^{1}(\mathbb{R},\mathcal{B}(\mathbb{R}),\lambda)}
+\newcommand{\totalint}{\int_{-\infty}^{\infty}}
+\newcommand{\negint}{\int_{-\infty}^{0}}
+\newcommand{\posint}{\int_{0}^{\infty}}
+\newcommand{\Realnum}{\mathbb{R}}
+\newcommand{\bigN}{\mathbb{N}}
+\newcommand{\bigA}{\mathcal{A}}
+\newcommand{\finU}{ \bigcup_{i=1}^{n}}
+\newcommand{\finIn}{ \bigcap_{i=1}^{n}}
+\newcommand{\infIn}{ \bigcap_{i=1}^{\infty}}
+\newcommand{\infU}{ \bigcup_{i=1}^{\infty}}
+\newcommand{\probsp}{(\Omega, \bigA, P)}
+\newcommand{\infsum}{\sum_{i=1}^{\infty}}
+\newcommand{\infun}{\cup_{n=1}^{\infty}}
+\newcommand{\asto}{\overset{a.s.}{\longrightarrow}}
+\newcommand{\pto}{\overset{P}{\longrightarrow}}
+\newcommand{\dto}{\overset{D}{\longrightarrow}}
+\newcommand{\ntends}{\underset{n\to\infty}{\longrightarrow}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\action}{\mathscr{A}}
+\newcommand{\dec}{\mathscr{D}}
+\newcommand{\Tor}{\text{ or }}
+\newcommand{\Ttin}{\text{ in }}
+\newcommand{\Tfor}{\text{ for }}
+\newcommand{\Tif}{\text{  if   }}
+\newcommand{\cov}{\text{cov}}
+\newcommand{\var}{\text{var}}
+\begin{document}
+\begin{center}
+\section*{Preliminary Exam-Mathematical Statistics Topics}
+\end{center}
+\section*{1. Basic Probability Theory}
+\subsection*{Definitions and Axioms.}
+\begin{defn} Let $\Omega$ be the sample space of an experiment. Any subset $A\in\Omega$ will be called an \textit{event}. If $\omega \in \Omega,$ the event $\{\omega\}$ is said to be \textit{simple} or \textit{elementary}.
+\end{defn}
+\begin{defn} An event for which a probability is assigned is called a random event.\end{defn}
+Let $\bigA$ be the class of random events, then
+\begin{enumerate}
+\item[A1:] $\Omega \in \bigA.$
+\item[A2:] If $A \in \bigA,$ then $A^{c}\in \bigA.$
+\item[A3:] If $A \in \bigA$ and $B \in \bigA,$ then $A\cap B \in \bigA$
+\end{enumerate}
+Thus, $\bigA$ is an \textit{algebra} of sets.
+\begin{defn}
+Let $\Omega$ be a non-empty set. A class $\bigA$ of subsets of $\Omega$ that satisfies A1-A3 is called an \textit{algebra of subsets of $\Omega$}  
+\end{defn}
+\begin{prop}
+Let $\bigA$ be an algebra of subsets of $\Omega,$ then the following properties hold:
+\begin{enumerate}
+\item[A4:]
+$\emptyset \in \bigA$, and
+\item[A5:]
+For $n\in \bigN$ and all $A_1, A_2,\dots A_n \in \bigA, \finU A_i \text{  and  } \finIn A_i \in \bigA.$
+\end{enumerate}
+\end{prop}
+Thus $\bigA$ is closed under finite intersection, union and complement.\\
+A \textbf{$\sigma$-algebra of sets} is an algebra that satisfied A1 and A2, AND is closed under \textit{countable} intersection and complement  (thus closed countable under union for free by DeMorgan's law) .
+\begin{description}
+\item[Example 1] 
+Discrete Case. \\
+If $\Omega$ is finite or countably infinite, then $\bigA = \mathcal{P}(\Omega)$ is a $\sigma$-algebra of all subsets of $\Omega$. \\
+In general, if $\Omega$ contains $n$ elements, then $\mathcal{P}(\Omega)$ has $2^{n}$ elements. 
+\item[Example 2] Continuous Case.\\
+Choose at random a point in $[0,1].$ Then $\Omega=[0,1],$ and $\bigA$ is all the subsets whose length is well defined. Note that $\bigA_0=\{A\subset [0,1]: \text{$A$ is a \textit{finite} union of intervals} \}$ is an \textit{algebra} but not a $\sigma$-algebra!
+\item[Example 3] Borel sets on $\Realnum$\\
+A Borel set on $\Realnum$, denoted $\Borel(\Realnum)$ is a set obtained from a countable number of intervals under countable number of unions, intersections and complements.
+\begin{itemize}
+\item The set of rational numbers $\rational$ is a Boreal set since it can be expressed as a countable union of elements. 
+\item Consequently, the set of irrational numbers if \textit{also} a Borel set. Since $\rational$ is closed under complement.
+\end{itemize}
+\end{description}
+\newpage
+Suppose these exists a probability function $P$ that assigns a real number $P(A)$ to each event $A\in \bigA$, then
+\begin{axiom}$P(A) \geq 0$
+\end{axiom}
+\begin{axiom}$P(\Omega) = 1$
+\end{axiom}
+\begin{axiom}(Finite additivity) If $A_1 \dots A_n$ are mutually exclusive, then $P(\finU A_i) =\sum_{i}^{n} P(A_i).$
+\end{axiom}
+A function P that satisfies Axioms 1-3 is called a \textit{Finitely additive} probability
+\begin{axiom}
+($\sigma$-additivity) If $A_1 \dots A_n\dots $ are mutually exclusive, then $P(\infU A_i) =\sum_{i}^{\infty} P(A_i).$
+\end{axiom}
+A function P that satisfies Axioms 1-3 is called a \textit{$\sigma$-additive} probability.
+\begin{itemize}
+\item Axiom 1-3 implies that $P(\emptyset)=0$
+\item $\sigma$-additivity implies finite additivity.
+\end{itemize}
+\begin{prop}
+Useful properties of a probability function P: 
+\begin{enumerate}
+\item[P1:] $P(A^c)=1-P(A).$
+\item[P2:] $0 \leq P(A)\leq 1.$
+\item[P3:] $A_1 \subset A_2 \implies P(A_1) \leq P(A_2).$
+\item[P4:] $P(\finU A_i) \leq \sum_{i}^{n} P(A_i)$
+\item[P5:] $P(\infU A_i) \leq \sum_{i}^{\infty} P(A_i)$
+\item[P6:] (Continuity of probability) If $A_n \downarrow A$, then $P(A_n) \downarrow P(A)$, and vice versa.
+\end{enumerate}
+\end{prop}
+\begin{defn}
+A probability space is $(\Omega, \bigA, P)$ where
+\begin{enumerate}
+\item $\Omega$ is a non-empty set,
+\item $\bigA$ is a $\sigma$-algebra of subsets of $\Omega,$ and
+\item $P$ is a probability on $\bigA.$
+\end{enumerate}
+\end{defn}
+\subsection*{Conditional probability}
+\begin{defn}
+Let $\probsp$ be a probability space. If $B\in \bigA$ and $P(B) > 0,$ we define the \textit{conditional probability} of $A$ given $B$ as
+\begin{displaymath}
+P(A|B) =\frac{P(A\cap B)}{P(B)}
+\end{displaymath}
+where $A\in \bigA$.
+\end{defn}
+\newpage
+\begin{prop}
+For each $B \in \bigA, P(\cdot | B)$ is a probability measure on $\bigA.$ 
+\end{prop}
+\textit{Idea:} Let $A \in \bigA.$ We want to show that $P(A|B)$ satisfies
+\begin{enumerate}[(1)]
+\item $P(A|B) > 0.$
+\item $P(\Omega|B)=1.$
+\item If $A_1,A_2\dots \in \bigA$ are mutually exclusive, then $P(\infU A_i |B)=\sum_{i=1}^{\infty}P(A_i|B).$
+\end{enumerate}
+\textit{Proof.} 
+\begin{enumerate}[(1)]
+\item By definition, $P(A|B) =\frac{P(A\cap B)}{P(B)}.$ Since $P(B) > 0$ and $A\cap B \in \bigA$, so if $A \cap B \not=\emptyset,$ then $P(A\cap B) > 0$,  thus $P(A|B) > 0.$ 
+\item $P(\Omega|B)=P(\Omega \cap B)/ P(B) = P(B)/P(B)=1.$
+\item For $n\in\bigN,$let $\{A_n\}$ be a sequence of disjoint sets in $\bigA,$ this makes $\{A_n \cap B\}$ disjoint as well. Thus we have $P(\infU A_i \cap B)=P(\infU(A_i \cap B))=\sum_{i=1}^{\infty} P(A_i \cap B)$. Therefore, 
+\begin{displaymath}
+P(\infU A_i | B) =\frac{P(\infU A_i \cap B)}{P(B)}=\sum_{i=1}^{\infty} \frac{P(A_i \cap B)}{P(B)}=\sum_{i=1}^{\infty} P(A_i|B).
+\end{displaymath}
+Note: When $P(B)=0,$ $P(A|B)$ is defined arbitrarily.
+\end{enumerate}
+\begin{thm}[Multiplication Rule]
+\item Let $\probsp$ be a probability space, and $A_1,\dots, A_n$ be subsets of $\bigA$. Then
+\begin{displaymath}
+P(A_1\cap\dots \cap A_n)= P(A_1)\cdot P(A_2|A_1)\cdot P(A_3|A_2\cap A_1)\cdot\dots\cdot P(A_n| A_1\cap\dots \cap A_{n-1})
+\end{displaymath}
+\end{thm}
+\subsection*{{\Large $\ast$} Baye's theorem}
+\begin{description}
+\item[Simplest statement] If $A,B \in \mathcal{A}, then$
+\end{description}
+\begin{displaymath}
+P(A|B)=\frac{P(B|A)P(A)}{P(B)}
+\end{displaymath}
+Of course, the fact that $A,B \in \mathcal{A}$ means $P(B) > 0.$
+\begin{thm}[Total Probability Rule]
+If $A_1,A_2\dots$ is a partition of $\Omega,$ then
+\begin{displaymath}
+P(B)=\infsum P(A_i)P(B|A_i)
+\end{displaymath}
+for all $B \in \bigA.$
+\end{thm}
+\textbf{Consequence}: We can find $P(A_i|B)$ for $A_i\in\bigA$ even without $P(B):$
+\begin{align*}
+P(A_i|B)&=\frac{P(A_i\cap B)}{P(B)}\\
+&=\frac{P(A_i \cap B)}{\infsum P(A_i) P(B|A_i)}\\
+&=\frac{P(A_i)P(B|A_i)}{\infsum P(A_i) P(B|A_i)}
+\end{align*}
+\newpage
+\textbf{Some Remarks on Conditional Probabilities.}\\
+\begin{description}
+\item{\underline{Bayes Rule:}} useful when we know the probabilities of $A_i$'s  and the conditional probabilities of $B|A_i$, but do not know the the probability of $B$ directly.
+\item{\underline{Prior Probability:}} In total probability or Bayes rule, the unconditional probability $P(A_i)$'s are called the prior probability. ('What is the probability of the event $A_i$ alone before any other event ?')
+\item{\underline{Posterior Probability:}} $P(A_i|B)$ are called the posterior probability of $A_i$ given $B.$ 
+\end{description}
+\subsection*{Independence}
+\begin{defn}
+Let $\probsp$ be a probability space. The random events $A$ and $B$ are said to be (stochastically)\textit{independent} if
+\begin{displaymath}
+P(A\cap B) = P(A)P(B)
+\end{displaymath} 
+\end{defn}
+\textbf{Observations:}
+\begin{itemize}
+\item Events with probability 0 or 1 are always independent of any other event.
+\item An event $A$ is independent of itself if and only if $P(A)= 0$ or $P(A)=1.$ 
+\end{itemize}
+\begin{prop}
+If $A$ and $B$ are independent of each other, then so are the pairs $(A, B^c)$, $(A^c,B)$, and $(A^c,B^c).$
+\end{prop}
+\begin{defn}[Pairwise independence]
+The random events $A_i, i \in I$ ($I$ is an arbitrary set of indices) are pairwise independent if 
+\begin{displaymath}
+P(A_i\cap A_j) = P(A_i)P(A_j)
+\end{displaymath} 
+for all $i,j \in I$ and $i \not= j.$
+\end{defn}
+\begin{defn}[Stochastic Independence] Let $\probsp$ be a probability space, and let $A_1,A_2,\dots$ be a sequence of events in $\bigA$
+\begin{enumerate}
+\item[a)] The events $A_1,\dots, A_n, n\geq 2$ are independent if 
+\begin{displaymath}
+P(A_{i_1}\cap \dots \cap A_{i_m})=P(A_{i_1})P(A_{i_{2}})\dots P(A_{i_{m}})
+\end{displaymath}
+for every collection of subindices $1\leq i_1\leq \dots \leq i_{m} \leq n$ and for every $m=2,\dots,n.$
+\item[b)] The (countably infinite) collection of events $A_,A_2,\dots$ are independent if $A_1,\dots,A_n$ are independent for every $n \geq 2.$
+\end{enumerate}
+\end{defn}
+\textbf{It is clear that every subfamily of a collection of independent events is also independent.}
+\newpage
+\subsection*{Random variables}
+\begin{defn}
+A random variable $X$ in a probability space $\probsp$ is a real function $X: \Omega \to \Realnum$ such that $[X \leq x] \in \bigA$ for every $x \in \Realnum.$ \end{defn}
+In Measure theory, $X$ is then a \textit{measurable function}.
+
+\begin{prop}
+If $X$ is a random variable, then $[X > x],[X < x],$ and $[X \geq x]$ are random events for every $x \in \Realnum.$
+\end{prop}
+$Proof.$ Clearly, $[X>x]=[X \leq x]^c$ and it belongs to $\bigA.$ Since $[X<x]=\cup_{k=1}^{\infty}[X \leq x -\frac{1}{k}]$, and each $[X \leq x -\frac{1}{k}] \in \bigA,$ we have $[X < x]\in \bigA.$ Finally, $[X \geq x] =[X < x]^c.$
+\begin{axiom}[Kolmogorov Axioms]
+Given a sample space $S$ and an associated Borel field $\Borel,$ a probability function is a function $P$ with domain $\Borel$ that satisfies:
+\begin{enumerate}[a)]
+\item $P(A) \geq 0$ for all $A \in \Borel,$
+\item $P(S) =1$
+\item $ If A_1,A_2,\dots \in \Borel, {A_i \cap A_j}_{i\not = j} = \emptyset$, then $P\{\infU A_i\}=\infsum P(A_i).$
+\end{enumerate}
+\textbf{Note: The same axiom also applies to $P(\cdot|B)$, where $B\in \Borel$ and $P(B)>0.$}
+\end{axiom}
+\begin{thm}
+$X$ is a random variable if and only if $X^{-1}(G)\in \mathcal{A}$ for every open set $G$ in $\Realnum.$
+\end{thm}
+\vspace{.1in}
+\begin{description}
+\item[Example.] Let $A_1,A_2,\dots$ be random events in the probability space $\probsp.$ Define 
+
+\begin{align*}
+\lim_{n\to\infty}\sup A_n&=\cap_{n=1}^{\infty}\cup_{k=n}^{\infty} A_k=\overline{\lim} A_n\\
+\lim_{n\to\infty}\inf A_n&=\cup_{n=1}^{\infty}\cap_{k=n}^{\infty} A_k=\underline{\lim}A_n
+\end{align*}
+We know that if $A_n\uparrow \cup_{n=1}^{\infty} A_n,$ then $P(\cup_{n=1}^{\infty})=\lim_{n\to\infty} P(A_n).$ Similarly, if $A_{n}\downarrow \cap_{n=1}^{\infty} A_n,$ then $P(\cap_{n=1}^{\infty})=\lim_{n\to\infty}P(A_n).$ Thus, $P$ is continuous.\\
+\\
+\item[Question:] Let $\{A_n\}$ be an \textit{arbitrary} sequence of events. Is is true that
+\begin{displaymath}
+\lim_{n\to\infty} P(A_n)=P(\lim_{n\to\infty}A_n) ?
+\end{displaymath}
+\item[Answer.] In general, this is not true, unless $\limsup A_n=\liminf A_n$ (See Fatou's Lemma).
+\end{description} 
+\begin{defn}
+The distribution function of a random variable $X,$ denoted by $F_X$ or simply $F$ where there is no ambiguity, is defined as 
+\begin{displaymath}
+F_X(x)=P(X\leq x)
+\end{displaymath}
+for every $x\in \Realnum.$
+\end{defn}
+
+\begin{prop}The distribution function $F$ of a random variable $X$ has the following properties:
+\begin{enumerate}[F1:]
+\item $x\leq y \implies F(x) \leq F(y),$ that is, $F$ is non-decreasing. 
+\item If $x_n \downarrow x,$ then $F(x_n) \downarrow F(x),$ that is, $F$ is right-continuous.
+\item If $x_n \downarrow -\infty,$ then $F(x_n)\downarrow 0,$ and if $x_n \uparrow +\infty,$ then $F(x_n)\uparrow 1$ (So we can write $F(-\infty)=0$ and $F(\infty)=1$).
+\end{enumerate}
+\end{prop}
+\newpage
+$Proof:$
+\begin{enumerate}[F1:]
+\item $x\leq y \implies [X\leq x] \subset [X\leq y], $ so
+\begin{displaymath}
+F(x)=P(X\leq x)\leq P(X\leq y)=F(y).
+\end{displaymath}
+\item If $x_n \downarrow x,$ then $[X \leq x_{n+1}] \subset [X \leq x_{n}] $ for all $n$ and $[X\leq x]=\cap_{n=1}^{\infty} [X\leq x_{n}], i.e., [X \leq x_n] \downarrow [X \leq x].$ So $F(x_n)=P(X\leq x_n) \to P(X\leq x)=F(x).$
+\item If $x_n \downarrow -\infty,$ then $[X\leq x_n] \downarrow \emptyset$ and $P(X\leq x_n)\to 0.$ If $x_n \uparrow +\infty,$ then $[X \leq x_n] \uparrow \Omega$ so $P(X\leq x_n) \to 1. \qed$
+\end{enumerate} 
+Some observations:
+\begin{itemize}
+\item A distribution function is \textit{non-decreasing}, thus it has \textit{countably many} points of discontinuity, or "jumps," because the left limits $ F(x-)$ exist and are finite for every $x.$
+\item Moreover, the height of the jump is $P(X=x)$:
+\begin{align*}
+F(x)-F(x-)&=F(x)-\lim_{n\to\infty} F(x-\frac{1}{n})\\
+&=P(X\leq x) - \lim_{n\to\infty} P(X\leq x-\frac{1}{n})\\
+&=\lim_{n\to\infty}P(x\leq X \leq x-\frac{1}{n}) \\
+&=P(X=x).
+\end{align*}
+\item $F$ is continuous at $x$ \textit{if and only if} $P(X=x)=0.$ In other words, a distribution function is continuous if and only if the events $[X=x]$ have probability zero for every $x\in\Realnum.$ 
+\item A distribution function can correspond to more than one random variable on the same probability space $\probsp.$ For example, if $X\sim N(0,1)$ then $-X \sim N(0,1)$ as well. However, $X$ and $-X$ are different w.p. 1, since $P(X=-X)=P(X=0)=0$ in this case.\end{itemize}
+\textbf{Question: Is every function $F$ that satisfies $F1,F2,$ and $F3$ the distribution function of some random variable?} 
+\textbf{Answer:} YES!\\
+%
+%Idea of proof: Suppose that $F$ is a function that satisfies $F1-F3,$ and we want to construct a random variable $X$ in some  probability space $\probsp$ such that $F_X=F.$ If we can define a probability $P$ on the Borelian sets of the real line such that $P((-\infty,x)])=F(x)$ for all $x\in \Realnum,$ then we can just take $(\Realnum, \Borel, P)$ as our probability space and the identity function $X(\omega)=\omega$ as our random variable, because the event $[X\leq x]$ is just the set $(-\infty,x]$ in that case, then $F_X(x)=F(x)$ for all $x$ as desired. The construction of $P$ is as follows: for intervals of the form $(a,b],$ define $P((a,b])=F(b)-F(a).$ If $a=-\infty$ or $b=\infty$, remember that $F(-\infty)=0$ and $F(\infty)=1$. Thus $F_{X}=F_{-X}.$ 
+%
+
+
+% Types of Random Variables
+\newpage
+\subsection*{Types of random variables}
+\begin{defn}
+\begin{enumerate}[(a)]
+\item A random variable is \text{discrete} if it takes a finite or countably infinite number of possible values. Discrete R.V.'s have countable range.
+
+Suppose we have a discrete sample space
+\begin{displaymath}
+\Omega =\{s_1,\dots,s_n\}
+\end{displaymath}
+ with a probability function $P.$ Define a random variable  $X$ with range $\chi=\{x_1,\dots,x_n\}$. Then we can define the probability function (\text{pmf})
+ \begin{displaymath}
+ P_X(X=x_i)=P(\{s_j\in \Omega: X(s_j)=x_i\}).
+ \end{displaymath}
+ 
+\item A random variable $X$ is absolutely continuous (or continuous for short) if there is a function $f(x) \geq 0$ such that 
+\begin{align*}
+F_X(x)=\int_{-\infty} ^{x} f(t) dt
+\end{align*}
+for all $x\in \Realnum.$ In that case, we call $f(x)$ the probability density function (pdf) of $X$, or density for short.\\
+
+Note: If $X$ is discrete, then $[X\leq x] =\cup_{i:x_i\leq x} [X=x_i], so$
+\begin{align*}
+F_{X}(x)=\sum_{i:x_i\leq x} P(X=x_i)=\sum_{i:x_i\leq x} p(x_i)
+\end{align*}
+This is a step function with jumps at each $x=x_i$ of size $p(x_i).$
+\end{enumerate}
+\end{defn}
+\flushleft
+ {\textbf{Example 1:}} Flip a coin $n$ times and observe the sequence of heads $(h)$ and tails $(t)$ obtained. The possible outcomes here are sequences of length $n$ of heads and tails, and we can define
+ \begin{displaymath}
+ \Omega=\{(\omega_1,\dots,\omega_n): \omega_i = h \Tor t, \text{for } i=1,\dots,n \}.
+ \end{displaymath}
+ Define
+ \begin{align*}
+ X(\omega) &= \text{number of $h$'s in the sequence $\omega=(\omega_1,\dots,\omega_n)$}\\
+ &=\# \{i : \omega_{i}\}
+ \end{align*} 
+\flushleft
+{\textbf{Example 2:}} Choose a point at random in [0,1]. Let $X$ be the square of the value obtained. Then 
+\begin{align*}
+\Omega &= [0, 1]\\
+X(\omega)&=\omega^2
+\end{align*}
+\begin{itemize}
+\item 
+A function $f(x) \geq 0$ is the density of a random variable if and only if $\totalint f(x)dx=1,$ because in that case $F(x):=\int_{-\infty} ^{x} f(t) dt$ satisfies $F1-F3.$
+\end{itemize}
+Verify: 
+\begin{enumerate}[F1:]
+\item Given that $f(x)\geq 0,$ if $x \leq y,$ it is clear that $\int_{-\infty} ^{x} f(t) dt \leq \int_{-\infty} ^{y} f(t) dt$ since $\int_{-\infty} ^{y} f(t) dt=\int_{-\infty} ^{x} f(t) dt+\int_{x} ^{y} f(t) dt \geq \int_{-\infty} ^{x} f(t) dt.$
+\item Integrals are continuous, so it is also right continuous.
+\item If $x_n \uparrow \infty, $ then it is given that $\totalint f(x)dx=1$. If $x_n \downarrow -\infty,$ then ?
+\end{enumerate}
+\textbf{Question: How do we know, in practice, if X has a density?}\\
+Answer. In most cases, $F_X$ will be \textit{(i)} Continuous and \textit{(ii)} differentiable by parts, that is, differentiable in the interior of a finite or countable infinite number of closed intervals whose union is $\Realnum$ . In general, $X$ has a density if $F_X$ is continuous and differentiable \textbf{except for a finite number of points.}\\
+\subsection*{Random variables of mixed types}
+\begin{description}
+\item[Example 1]
+Let $X \sim U[0,1],$ so
+\begin{displaymath}
+F_X(x)=
+\begin{cases}
+0, & x <0\\
+x, & 0\leq x \leq 1\\
+1, & x > 1.
+\end{cases}
+\end{displaymath}
+
+Define $Y(\omega)=\min (X(\omega),\frac{1}{2}).$ Note that $Y$ is a random variable, since it is a continuous function of $X,$ and $Y$ is of mixed type:
+\begin{displaymath}
+F_Y(x)= 
+\begin{cases}
+F_X(x), & x <\frac{1}{2}\\
+1,& x \geq \frac{1}{2}
+\end{cases}
+\end{displaymath}
+This is because $F_Y(x)=P(X \leq x)= F_X(x)$ if $x < \frac{1}{2},$ while $F_Y(x)=P(\frac{1}{2} \leq x)=1$ if $x\geq \frac{1}{2}.$
+\item[Example 2] \textit{Cantor's function} (Neither absolutely continuous, nor discrete, nor mixed!) This is a continuous function that is differentiable everywhere except in a set with Lebesgue measure zero, but is not absolutely continuous. The construction is as follows. First, define $F(x)=0$ if $x < 0$ and $F(x)=1$ if $x > 1,$ then proceed as follows:
+\begin{description}
+\item[Step 1] Define $F(x)=1/2$ for $x\in(1/3, 2/3),$ so far, $F$ is non-decreasing and continuous where it is defined, namely in $(-\infty,1) \cup (1/3, 2/3) \cup 1.$ The intervals $[0,1/3]$ and $[2/3,1]$ are not yet defined, with total length $2/3.$
+\item[Step 2] Define $F(x)=1/4$ for $x\in (1/9,2/9)$ and $F(x)=3/4$ for $x\in (7/9,8/9).$ The total length of intervals not yet defined is $4/9=(2/3)^2.$
+\item[Step $n+1$] On the central theird of each of the $2^n$ intervals where $F$ is not yet defined, define $F(x)$ as the average of the values of $F$ on the two intervals closest to $x.$ There will be $2^{n+1}$ intervals left where $F$ is not yet defined, of total length $(2/3)^{n+1}.$
+\end{description}
+\end{description}
+In this way, we define $F$ by induction in a countable number of open intervals, whose complement is known as Cantor's set, $C$, and has Lebesgue measure zero. Now, let $X$ be a random variable whose distribution function is $F,$ Cantor's function. Then $X$ is neither discrete nor of mixed type because $F$ is continuous but not absolutely continuous since $F'(x)=0$ for all $ x \in C^c.$ Thus, if there were a density function $f(x),$ it would be zero everywhere except for $x \in C$. But $C$ has measure zero, so $\totalint f(x)dx =0$, not 1. We say that $X$ is a \textit{singular} random variable: it has a continuous distribution $F_X$ but $F_X'$ is zero almost everywhere.\\
+
+\textbf{Note:}
+\begin{itemize}
+\item Singular random variables: $X$ is singular if and only if $F_X$ is continuous and there is a set $B$ of Lebesgue measure zero such that $P(x\in B)=1.$
+\item Every random variable is a mixture of discrete, absolutely continuous and singular.
+\end{itemize}
+\textbf{Question: How do we show that any random variable is a mixture of discrete, absolutely continuous and singular?}\\
+Answer. Let $X$ be any random variable and $F$ be its distribution function. Let $J=\{x_1,x_2,\dots\}$ be the set of jumps of $F$ ($J=\emptyset$ if $F$ is continuous). Indicate the jump size at $x_i$ by $p_i$, that is:
+\begin{displaymath}
+p_i=F(x_i)-F(x_i-).
+\end{displaymath}
+Define
+\begin{displaymath}
+F_d(x)=\sum_{i: x_i \leq x} p_i.
+\end{displaymath}
+Then $F_d$ is a non-decreasing (thus monotone) step function and the \textit{discrete} part of $F$. Note that $F-F_d$ is continuous, as $F_d$ removes all the jumps.
+
+Now, any monotone function is \textit{differentiable} Lebesgue almost everywhere (Thm. 6.3.3 of Cohn), thus if $D$ is the set of points where $F(x)$ is differentiable, we define
+\begin{displaymath}
+f(x)=
+\begin{cases}
+F'(x) & x\in D\\
+0& x\not\in D.
+\end{cases}
+\end{displaymath}
+Let $F_{ac}=\int_{-\infty}^{x} f(t)dt.$ This function is non-decreasing, because it is the indefinite integral of a non-negative function ($f \geq 0$ because $F$ is non-decreasing) and it is absolutely continuous by definition. Then $F'_{ac}(x)=f(x)$ for almost every $x$. $F_{ac}$ is the absolutely continuous part of $F$.\\
+Finally, let $F_s=F-F_{d}-F_{ac}.$ This is a continuous function. It is differentiable a.e. and $F_{s}'(x)=f(x)-0-f(x)=0,$ therefore, $F_s$ is singular. This is the \textit{singular part} of $F$. Thus we have (the Lebesgue Decomposition):
+\begin{displaymath}
+F=F_{d}+F_{ac}+F_{s}.
+\end{displaymath}
+\subsection*{The distribution of a random variable}
+\textbf{What is the pdf of a random variable?}
+\\
+\textbf{Answer:} A random variable $X$ is absolutely continuous if there is a function $f(x)\geq 0$ such that
+\begin{displaymath}
+F_{X} (x) =\int_{-\infty}^{x} f(t) dt, \hspace{.1 in} \forall x \in \Realnum
+\end{displaymath}
+and the function $f$ is called the probability density function (pdf) of $X.$
+\\
+\textbf{What is the pmf of a random variable?}
+\\
+\textbf{Answer:} A random variable is $discrete$ if it takes a finite or countable infinite number of possble values. i.e., if there is a set $\{x_1,\dots\} \subset \Realnum$ such that $X(\omega) \in \{x_1,x_2,\dots\} \forall \omega \in \Omega.$ The function $p(x)$ defined by $p(x_i)=P(X=x_i), i=1,2,\dots,$ is called the prbability function (pmf) of $X.$
+\\
+
+\begin{defn}
+The probability $P_X$ defined as $P_X(B)=P(X \in B)$ for every $B \in \Borel$ is called the distribution of $X.$
+\end{defn}
+\begin{prop}
+$(\Realnum, \Borel, P_X)$ is a probability space.
+\end{prop}
+\begin{prop}
+\begin{enumerate}[(a)]
+\item If $X$ is a discrete random variable that only takes on values in the set $\{x_1,x_2,\dots\},$ and $p(x)$ is the corresponding probability function, then
+\begin{displaymath}
+P_X(B)=\sum_{i: x_i \in B} p(x_i),  B \in \Borel.
+\end{displaymath}
+\item If $X$ is continuous with density function $f(x),$ then
+\begin{displaymath}
+P_X(B)=\int_{B} f(x) dx, B \in \Borel
+\end{displaymath}
+\end{enumerate}
+\end{prop}
+\textbf{Question: Given a random variable $X$, what determines its distribution $P_X$?}\\
+\textbf{Answer:} The distribution $P_X$ of X is determined by any of the following functions:
+\begin{enumerate}[(1)]
+\item The distribution function $F_X.$
+\item The density function $f(x)$ if $X$ is continuous.
+\item The probability function $p(x)$ if $X$ is discrete.
+\end{enumerate}
+
+\subsection*{Distribution of univariate transformations}
+
+Given a random variable $X$ with distribution $F_X$, and a function $g:\Realnum \to \Realnum$. Define $Y=g(X).$ What is the distribution of $Y$?
+\\
+Since $g(X)=Y,$ then $F_Y(x)=P(g(X)\leq x)$. So this is a matter of solving the inequality $g(X) \leq x.$ \begin{description}
+\item[Example 1.] Let $X \sim U(0,1)$. What is the distribution of $Y=-\ln X$?
+
+\item$P(Y \leq x) = P(\ln X > - x) = 1 - P( X \leq e^{-x})= 1-e^{-x}. \implies Y$ is exponentially distributed.
+
+\item[Example 2.]  Let $Z \sim N(0,1)$, what is the distribution of $Y=Z^{2}$
+\item Remember that the density function for $Z$ is $f_{Z}(z)=\frac{1}{\sqrt{2\pi}} e^{-z^2/2}.$
+\begin{align*}
+P(Y \leq y) & = P(Z^{2} \leq y) \\
+&=P(-\sqrt{y} \leq Z \leq  \sqrt{y} )\\
+&=F_{Z} (\sqrt{y})-F_Z(-\sqrt{y})\\
+\intertext{ Since we don't know the explicit expression for these values of $\sqrt{y}$, we can find its density function by taking the derivative:}
+\frac{d}{dy} F_Z(\sqrt{y}) & = \frac{1}{2 \sqrt{y}}f_Z(\sqrt{y}) =\frac{1}{2\sqrt{2\pi}}y^{-\frac{1}{2}}e^{-y/2}\\
+\frac{d}{dy} F_Z(-\sqrt{y}) & = -\frac{1}{2 \sqrt{y}}f_Z(-\sqrt{y})=-\frac{1}{2\sqrt{2\pi}}y^{-\frac{1}{2}}e^{-y/2}\\
+\frac{d}{dy} F_Z(\sqrt{y}) &=\frac{y^{-\frac{1}{2}}e^{-y/2}}{\sqrt{2\pi}}
+\intertext{so turns out  $Y \sim \Gamma (\frac{1}{2},2),$ also called the chi-squared distribution.}
+\end{align*}
+\item[For one-to-one functions only] :
+(Transformation theorem) 
+\begin{displaymath}
+f_{Y}(y)=f_{X}[x(y)] \cdot |{\frac{d x(y)}{dy}}|
+\end{displaymath}
+\item[Example 3] Let $X \sim U(-\frac{\pi}{2},\frac{\pi}{2}).$ Let  $Y= b \tan(X) + a $.
+By the transformation theorem,
+\begin{align*}
+b \tan (X) +a &= Y\\
+\implies x(y) &= \arctan (\frac{y-a}{b})\\
+\frac{dx(y)}{dy}& =\frac{1}{b} \frac{1}{1+(\frac{y-a}{b})^2}\\
+f_X(x(y))&=\frac{1}{\pi}\\
+\implies f_Y(y)&=f_X(x(y))\frac{dx(y)}{y}\\
+&=\frac{1}{b\pi (1+(\frac{y-a}{b})^{2})}
+\end{align*} 
+\end{description}
+
+\textbf{Note:} $Y=g(X)$ retains the property of $X,$ no matter what $g$ is. That is, $X$ discrete $\implies Y$ discrete, $X$ abs. continuous $\implies Y$ abs. continuous, etc.
+
+\subsection*{Expectation}
+\begin{defn}
+If a random variable $X \sim F$ is such that $\totalint |x| d F(x) < \infty,$then the expected value is defined as 
+\begin{displaymath}
+E(X)=\totalint x dF(x)
+\end{displaymath}
+\end{defn}
+Note that since $\phi(x)=x$ is continuous and the distribution $F$ is monotone, the integration $\int_{a}^{b} x dF(x)$ always exists in finite intervals. However, $I=\int_{-\infty}^{0} xdF(x) $ and $II=\int_{0}^{\infty} x dF(x)$ may be infinite. It turns out there are only \textbf{four possible cases}:
+\begin{enumerate}[(1)]
+\item If $\totalint |x| dF(x)=II-I < \infty,$ then both $I$ and $II$ are finite, so $E(X)$ is well-defined and finite: $E(X) = I + II$. 
+
+\item If $\totalint |x| dF(x)=\infty$, then either $I$ or $II$ are finite. 
+\begin{enumerate}[(a)]
+\item If $I$ is finite and $II$ is infinite, $E(X)$ is well defined but $E(X)=\infty$
+\item If $II$ is finite and $I$ is infinite, $E(X)$ is well defined but $E(X)=-\infty$
+\item If both $I$ and $II$ are infinite, then $E(X)$ is not well-defined.
+\end{enumerate}
+\end{enumerate}
+Thus, $X$ is integrable if and only if it is absolutely integrable.\\
+
+
+\subsection*{Expectation for different types of random variable.}
+
+\begin{enumerate}
+\item If $X$ is discrete with probability function $p(x_i),$ then
+\begin{displaymath}
+E(X)=\sum_i x_ip(x_i),
+\end{displaymath}
+assuming the infinite sum is well-defined.
+\item If $X$ is absolutely continuous with density $f(x),$ then
+\begin{displaymath}
+E(X) =\totalint xf(x) dx,
+\end{displaymath}
+assuming the integral is well-defined.
+\end{enumerate}
+\begin{thm}[General]
+If a random variable $Y=h(X)$ for some Borel-measurable function $h,$ and $F_Y$ denotes the distribution function of $Y,$ then, in principal, $E(Y)=\totalint y dF_Y(y).$ But
+\begin{displaymath}
+\totalint ydF_Y(y)=\totalint h(x)dF_X(x)
+\end{displaymath}
+This means that we don't have to find the distribution of $Y.$
+\end{thm}
+\begin{description}
+\item[Example] Let $X\sim U[0,1]$ and $Y=\min (X, \frac{1}{2})$
+\begin{align*}
+E(Y)&=\totalint \min(X,\frac{1}{2})dF_X(x)\\
+&=\int_{-\infty} ^{\frac{1}{2}} XdF_X(x)+\int_{\frac{1}{2}}^{\infty} \frac{1}{2} dF_X(x)\\
+\intertext{Note that $F_X$ is absolutely continuous with density $f(x)=\chi_{[0,1]} (x)$, so}
+E(Y)&=\int_{-\infty} ^{\frac{1}{2}} XF'_X(x)+\int_{\frac{1}{2}}^{\infty} \frac{1}{2}F'_X(x)\\
+&=\int_{-\infty} ^{\frac{1}{2}} xdx+\int_{\frac{1}{2}}^{\infty} \frac{1}{2}dx\\
+&=\frac{1}{8}+\frac{1}{4} =\frac{3}{8}.
+\end{align*}
+\end{description}
+\subsection*{Alternative definitions for expectation}
+
+
+\begin{prop}
+$E(X)=\int_{0}^{\infty}\{1-F(x)\} dx - \int_{-\infty}^{0} F(x)dx$.  
+\end{prop}
+\begin{cor}
+If $P(X<0)=0$, that is, if $X$ only takes on non-negative values, then
+\begin{displaymath}
+E(X)=\int_{0}^{\infty}\{ 1-F(x)\} dx= \int_{0}^{\infty} P(X>x) dx
+\end{displaymath}
+\end{cor}
+For example, suppose $X\sim Exp (\lambda)$. Using the above definition of $E(X),$ one should compute:
+\begin{displaymath}
+E(X)=\int_{0}^{\infty} \{1-F(x)\} dx =\int_{0}^{\infty} e^{-\lambda x} dx =\frac{1}{\lambda}
+\end{displaymath}
+For discrete, non-negative random variables we also have a useful corollary:
+\begin{cor}
+If X is discrete and takes on only non-negative integer values, then
+ \begin{displaymath}
+ E(X)=\sum_{n=0}^{\infty} P(X > n) =\sum_{n=1}^{\infty} P(X \geq n).
+ \end{displaymath}
+ \end{cor}
+ \subsection*{\Large$\ast$Properties of the expection}
+ \begin{description}
+ \item[E1.] If $X(\omega)=c, \forall \omega \in \Omega,$ then $E(X)=c.$
+ \item [E2.] (Monotone.) If $X(\omega) \leq Y(\omega), \forall \omega \in \Omega,$ then $E(X) \leq E(Y).$
+ \item[E3.] (Linearity.) If $E(X)$ is well-defined, then $E(aX+b)=aE(X)+b$ for any $a,b \in \Realnum.$
+ \item[E4.] (Jensen's inequality.) If $\phi: \Realnum \to \Realnum$ is a \textit{convex} function and $X$ is an integrable random variable, then
+ \begin{displaymath}
+ E(\phi(X)) \geq \phi(E(X)).
+ \end{displaymath}
+ \end{description}
+ Consequences of the above four properties:
+ \begin{lemma}
+$ X$ is integrable if it's bounded.
+ \end{lemma}
+ \begin{lemma}  (Integrability criterion)
+For any random variable $X$ we have 
+\begin{displaymath}
+\sum_{n=1}^{\infty}P(|X| >n )\leq E(|X|) \leq 1+\sum_{n=1}^{\infty} P(|X| \leq n).
+\end{displaymath}
+Therefore, $X$ is integrable if and only if $\sum_{n=1}^{\infty} P(|X|\geq n)$ is finite.
+ \end{lemma}
+ \begin{lemma}
+ The following inequalities hold, assuming that the RHS are finite:
+ \begin{enumerate} [(a)]
+ \item $|E(X)| \leq E(|X|^p), \forall p \geq 1.$
+ \item $E(|X|)^p \leq E(|X|^p), \forall p \geq 1.$
+ \item$ |E(X)| \leq E(|X|) \leq \{E(|X|^p)\}^{\frac{1}{p}}, \forall p \geq 1.$
+ \item $\{E(|X|^r)\}^{\frac{1}{r}} \leq \{E(|X|^s)\}^{\frac{1}{s}}, \forall r \leq s.$
+ \end{enumerate}
+ \end{lemma}
+ \subsection*{Expectation of functions of random variables}
+ \begin{thm}
+ In general, let $X$ be a random variable, $\phi(x)$ be a real measurable function and $Y=\phi(X).$ Then
+ \begin{displaymath}
+ \totalint y dF_Y(y)=\totalint \phi(x) dF_X(x).
+ \end{displaymath}
+ where the existence of either one of the integrals implies the existence of the other one.	
+ \end{thm}
+ \begin{prop}[Power transformation]
+ \begin{displaymath}
+ E(X^k) = k [\int_{0}^{\infty} \{1- F_X(x)\} x^{k-1}dx - \int_{-\infty}^{0} F_X(x) x^{k-1}dx], \text{for $k=1,2,\dots$}
+ \end{displaymath}
+ \end{prop}
+ \newpage
+ \subsection*{Moments}
+Given a random variable $X$, the quantity $E\{(X-b)^k\}$, if it exists, is called the $k-th$ moment of X around $b$, for $b \in \Realnum,$ and $k\in \bigN.$ The $k-th$ moment of $X$ around the mean, $E\{(X-E(X))^k\}$, is called the $k-th$ central moment of $X.$
+\subsection*{Variance}
+The second central moment of $X$ is called the \textit{variance} of $X:$
+\begin{displaymath}
+V(X) = E\{(X-E(X))^2\} \geq 0.
+\end{displaymath}
+Note that by the linearity of the expectation, we have:
+\begin{align*}
+\sigma_{X}^2 &= E\{(X-\mu_X)^2\}\\
+&=E(X^2-2X\mu_X+\mu^2_X)\\
+&=E(X^2)-2\mu_XE(X)+\mu^2_X\\
+&=E(X^2)-\mu_X^2\\
+&=E(X^2)-(E(X))^{2}
+\end{align*}
+More properties of the expectation, related to moments (variance):
+\begin{description}
+\item[E5.] If $X=c$, then $V(X)=0.$
+\item[E6.] $V(aX+b)=a^2V(X), \forall a,b\in \Realnum.$
+\item[E7.] (Basic Inequality). If $X$ is a non-negative random variable, then
+\begin{displaymath}
+P(X \geq \lambda) \leq \frac{1}{\lambda} E(X), \forall \lambda >0.
+\end{displaymath}
+Some consequences of this inequality are:
+\begin{enumerate} [(a)]
+\item Chebychev's inequality:
+\begin{displaymath}
+P(|X-E(X)| \geq \lambda) \leq \frac{V(X)}{\lambda^2}, \forall \lambda > 0.
+\end{displaymath}
+\item Markov's inequality:
+\begin{displaymath}
+P(|X| \geq \lambda) \leq \frac{E(|X|^t)}{\lambda^t}, \forall \lambda, t > 0.
+\end{displaymath}
+\item If $X \leq 0$ and $E(X)=0,$ then $X = 0.$
+\item If $V(X)=0,$ then $X =c$ for some constant $c.$
+\end{enumerate}
+\item[E8.] If $X$ and $Y$ are random variables in $\probsp$ such that $E(|X|^t) < \infty$ and $E(|Y|^t) < \infty$ for some $t >0,$ then $E(|X+Y|^t)<\infty.$
+\end{description}
+\section*{2. Random Vectors}
+\subsection*{Joint pdf and pmf}
+\begin{defn}
+\begin{enumerate}[(a)]
+\item A vector $X=(X_1,\dots,X_n)$ whose components are random variables defined on the same probability space $\probsp$ is called a random vector (or n-dimensional random variable).
+\item The joint distribution function $F_X$ of a random vector $X$ is defined as 
+\begin{displaymath}
+F_X(x)=P(X_1\leq x_1, \dots, X_n \leq x_n), x\in \Realnum^{n}
+\end{displaymath}
+\end{enumerate}
+\end{defn}
+Observe that, since all the $X_i's$ are defined on the same probability space, the set
+\begin{displaymath}
+[X_1\leq x_1, \dots, X_n \leq x_n] = \cap_{i=1}^{n} [X_i \leq x_i] \in \mathcal{A},
+\end{displaymath}
+so $F_X$ is well-defined.
+\begin{prop}
+
+The distribution function $F$ of a random vector $X$ satisfies the following properties: 
+\begin{enumerate}
+\item[F1:] $F(x_1,\dots, x_n)$ is non-decreasing on each variable. That is, if $x < y$, then
+\begin{displaymath}
+F(x_1,x_2,\dots,x,\dots x_n) \leq F(x_1,x_2,\dots,y,\dots,x_n)
+\end{displaymath}
+for each $i=1 \dots n.$
+\item[F2:] $F(x_1,\dots, x_n)$ is right-continuous on each variable, that is, if $y_n \downarrow x$ then
+\begin{displaymath}
+\lim_{n\to \infty}F(x_1,x_2,\dots,y_n,\dots x_n) \leq F(x_1,x_2,\dots,x,\dots,x_n)
+\end{displaymath}
+for each $i=1 \dots n.$
+\item[F3:] For each $i=1 \dots n$,
+\begin{displaymath}
+\lim_{x_i \to -\infty} F(x_1,\dots x_i,\dots,x_n) = 0.
+\end{displaymath}
+Also,
+\begin{displaymath}
+\lim_{x_i \to -infty} F(x_1,\dots x_i,\dots,x_n) = 1.
+\end{displaymath}
+\end{enumerate}
+\item[F4:] Given $I=(a,b]$ and $g: \Realnum^n \to \Realnum,$ define
+\begin{displaymath}
+\Delta^{(i)}_{I} g(x_1,\dots,x_n)=g(x_1,\dots,x_{i-1},b,x_{i+1},\dots, x_n)-g(x_1,\dots,x_{i-1},a,x_{i+1},\dots, x_n)
+\end{displaymath} 
+$\Delta$ is called the \textit{difference operator} and can be applied iteratively. 
+\\
+
+If $F : \Realnum^n \to \Realnum$ is a distribution function, then
+\begin{displaymath}
+\Delta^{(1)}_{I_1} \cdots \Delta^{(n)}_{I_n} F(x) \geq 0.
+\end{displaymath}
+This property is identical to saying $P(a_1 < X_1 < b_1,\dots, a_n < X_n < b_n) \geq 0$ for $a_k < b_k.$
+\end{prop}
+\begin{defn}
+A function $F: \Realnum^n \to \Realnum$ that satisfies properties $F1- F4$ is called an $n$-dimensional distribution function.
+\end{defn}
+To illustrate F4, for example if $F: \Realnum^{2} \to \Realnum$ and given $I_{1}=(a_1,b_1], I_2=(a_2,b_2],$ we have 
+\begin{align*}
+\Delta^{(1)}_{I_{1}}\Delta^{(2)}_{I_{2}} F(x,y) &=\Delta^{(1)}_{I_{1}} \{F(x,b_2)-F(x,a_2)\}\\
+&=F(b_1,b_2)-F(a_1,b_2)-F(b_1,a_2)F(a_1,a_2)
+\end{align*} 
+The discrete and abs. continuous types of $n$-dimensional variables is similarly defined as in the one-dimensional case. Note that:
+\vspace{.1in}
+
+\begin{tabularx}{\textwidth}{ XX }
+
+$X_1,\dots, X_n$ discrete & $\iff     \hspace{2pt }(X_1,\dots,X_n)$ discrete  \\
+$X_1,\dots, X_n$ abs. continuous & $\Leftarrow     \hspace{2pt } (X_1,\dots,X_n)$ abs. continuous  \\
+$X_1,\dots, X_n$ abs. continuous & $\not\Leftarrow  \hspace{2pt } (X_1,\dots,X_n)$ abs. continuous  \\
+$X_1,\dots, X_n$ abs. continuous
+ AND independent  &$ \Leftarrow   \hspace{2pt }  (X_1,\dots,X_n)$ abs. continuous  \\
+\end{tabularx}
+\begin{prop}
+\begin{enumerate}[(a)]
+\item If $X$ is a discrete random vector, then
+\begin{displaymath}
+P_X{(B)}=\sum_{i: x_i \in B} P(X_i =x_i), B \in \Borel.
+\end{displaymath}
+\item If $X$ is continuous, with density $f,$ then
+\begin{displaymath}
+P_X{(B)} ={ \int \cdots \int }_{B} f(x_1,\dots,x_n) dx_1\dots dx_n.
+\end{displaymath}
+\end{enumerate}
+\end{prop}
+%\subsection*{Expectation of functions of random vectors}
+%Let $X \in \Realnum^n$ be a random vector. Let $\phi: \Realnum^n \to \Realnum$ be a Borel-measurable function. Define
+%\begin{displaymath}
+%Y=\phi(X),
+%\end{displaymath}
+%where $Y$ is a univariate random variable. Then
+%\begin{displaymath}
+%E(Y) = \totalint \cdots \totalint \phi(x_1,\dots,x_n) d F_X(x_1,\dots, x_n)
+%\end{displaymath}
+%\begin{description}
+%\item [Discrete Case]
+%\begin{displaymath}
+%E(Y)=\sum_{\forall x} \phi(x_i) p(x_i),
+%\end{displaymath}
+%where $p(x_i)$ is the probability mass function.
+%\item [Absolutely Continuous Case]
+%\begin{displaymath}
+%E(Y)=\totalint\cdots\totalint \phi(x_1,\dots x_n) f(x_1,\dots, x_n) dx_1\dots dx_n,
+%\end{displaymath}
+%where $f(x_1,\dots,x_n)$ is the probability density function.
+%\end{description}
+%\subsection*{Independence}
+%\begin{defn}
+%The random variables $X_1 \dots X_n$ are independent if 
+%\begin{displaymath}
+%P(X_1\in B_1,\dots, X_n\in B_n)=\Pi_{i=1} ^{n} P(X_i \in B_i), B_i \in \Borel, i=1 \dots n.
+%\end{displaymath}
+%\end{defn}
+\begin{prop} [Independence criterion]
+\begin{enumerate}
+\item [(a)] If $X_1, \dots, X_n$ are independent, then
+\begin{displaymath}
+F_X(x_1,\dots,x_n)=\Pi_{i=1} ^{n} F_{X_i} (x_i),  (x_1,\dots, x_n) \in \Realnum^n
+\end{displaymath}
+\item [(b)] Reciprocally, if there are functions $F_1,\dots F_n$ such that
+\begin{displaymath}
+\lim_{x\to\infty} F_i(x) =1,\hspace{8pt} i=1,\dots, n
+\end{displaymath}
+and
+\begin{displaymath}
+F_X(x_1,\dots,x_n) = \Pi_{i=1}^{n} F_i(x_i), \hspace{8pt} (x_1,\dots,x_n) \in \Realnum^n
+\end{displaymath}
+\end{enumerate}
+then $X_1,\dots, X_n$ are independent and $F_{X_i}=F_i$ for every $i=1,\dots, n.$
+\end{prop}
+\subsection*{Marginal pmf and pdf}
+\begin{itemize}
+\item In general, the marginal distribution function of a random vector is obtained by making all the other random variables go to $+ \infty$ in the  joint distribution function.
+\item The marginal density function (PDF) is obtained by integrating the joint density from $- \infty $ to $+ \infty$ with respect to all other random variables.
+\item The probability mass function (PMF) is obtained by 'summing' out all other variables.
+\end{itemize}
+\begin{prop}
+\begin{enumerate} [(a)]
+\item If $F(x,y)$ is the joint distribution function of $X$ and $Y,$ then the distribution function of $X$ is
+\begin{displaymath}
+F_X(x)=\lim_{y\to \infty} F(x,y) :=F(x,+\infty).
+\end{displaymath}
+$F_X$ is known as the marginal distribution function of $X$.
+\item If $f(x,y)$ is the joint density function of $X$ and $Y,$ then the density function of $X$ is given by
+\begin{displaymath}
+f_X(x)=\totalint f(x,y) dy
+\end{displaymath}
+$f_X$ is known as the marginal density function of $X.$
+\end{enumerate}
+\end{prop}
+\subsection*{Conditional pdf and pmf}
+Supposed we have a random variable $X$ and a certain event $A$ with $P(A) > 0.$ We are given the distribution $F_X(x),$ and given an event $A$, we want to define the distribution of $X$ given $A$. Recall that
+\begin{displaymath}
+F_X(x)=P([X \leq x]), [X \leq x] = \{\omega: X(\omega) \leq x\}
+\end{displaymath}
+Define 
+\begin{displaymath}
+F_{X|A}(x) = P([X \leq x]|A) = \frac{P([X \leq x] \cap A)}{P(A)}
+\end{displaymath}
+then $F_{X|A}$ is the distribution of $X$ given event $A$.\\
+\textbf{(When given a \textit{discrete} random variable)} If $Y$ is discrete and $B_0=\{y_n: P_Y(y_n)>0\}$, then $P(Y=y_n) >0,$ so
+\begin{displaymath}
+F_{X|Y}(x|y_n)=P([X\leq x]| [Y = y_n])
+\end{displaymath}\\
+\textbf{(When given an \textit{absolutely continuous} random variable) }If $Y$ is absolutely continuous with density $f_Y(y).$ Let $B_0=\{y\in \Realnum, f_Y(y) > 0 \}.$ Take an interval $I$ that contains $y,$ for a given $y\in B_0, P(Y \in I) > 0.$ Then
+\begin{displaymath}
+P(X\leq x | Y \in I) = \frac{P([X\leq x]) \cap [Y \in I]}{P(Y\in I)}.
+\end{displaymath}
+We say that $F_{X|Y}(x|y)$ is the conditional distribution of $X$ given $Y=y$ if
+\begin{displaymath}
+F(x,y)=\int_{-\infty}^{y} F_{X|Y} (x|y) dF_Y(y)
+\end{displaymath}
+is satisfied.\\
+We can use this to prove that if $Y$ is absolutely continuous and $X|Y=y$ is discrete, then $X$ is discrete with marginal probability function given by
+\begin{displaymath}
+p_X(x)=\totalint p_{X|Y}(x|y) f_Y(y) dy
+\end{displaymath}
+and $Y|X=x$ is also absolutely continuous with density given by 
+\begin{displaymath}
+f_{Y|X} (y|x)=\frac{P_{X|Y}(x|y)f_Y(y)}{P_{X}(x)}.
+\end{displaymath}
+\begin{itemize}
+\item There is no joint density if $X$ and $Y$ are not of the same nature.
+\item If $(X,Y)$ are jointly absolutely continuous, then $X|Y$ is absolutely continuous with density
+\begin{displaymath}
+f_{X|Y}(x|y)=\frac{f(x,y)}{f_Y(y)}
+\end{displaymath}
+\item Reciprocally, if $X|Y$ is absolutely continuous with marginal density $f_Y(y),$ then $(X,Y)$ is jointly absolutely continuous with joint density
+\begin{displaymath}
+f(x,y)=f_{X|Y}(x|y)f_Y(y)
+\end{displaymath}
+\item (Hybrid Case:)\\
+If $X|Y$ has discrete distribution with probability function $P(x|y)$ and $Y$ has absolutely continuous distribution with density $f_Y(y)$, then $X$ is discrete with probability function given by 
+\begin{displaymath}
+p_{X}(x)=\totalint f(x|y)f_Y(y)dy
+\end{displaymath} 
+Also, $Y|X$ has absolutely continuous distribution with density
+\begin{displaymath}
+f(y|x)=\frac{p(x|y)f_Y(y)}{p_X(x)},
+\end{displaymath}
+where the value of $X$ is fixed.
+\end{itemize}
+\subsection*{Conditional expectation}
+\begin{defn}
+Let $X$ and $Y$ be random variables on $\probsp.$ The conditional expectation of $X$ given $Y=y$ os the expectation of the conditional distribution of $X$ given $Y=y,$ if this expectation exists. That is,
+\begin{displaymath}
+E(X|Y=y)=\totalint x dF_{X|Y=y}(x)
+\end{displaymath}
+\end{defn}
+If we define $\phi(y)=E(X|Y=y),$ which is measurable if $X$ is integrable, then the random variable $\phi(Y)$ is called the \textit{conditional expectation of $X$ given $Y$,} which satisfies all the properties of an ordinary expectation (monotone, linearity, Jensen's inequality, etc.)\\
+\textbf{Important Property:} $E\{E(X|Y)\}=E(X),$ or equivalently
+\begin{displaymath}
+E(X)=\totalint E(X|Y=y)dF_Y(y)
+\end{displaymath}
+\begin{prop}
+If $\phi(X,Y)$ is integrable, then
+\begin{displaymath}
+E\{\phi(X,Y)|Y=y\}=E\{\phi(X,y)|Y=y\}=\int \phi(x,y)dF_{X|Y=y}(x).
+\end{displaymath}
+\end{prop}
+\subsection*{Covariance: definition and properties.}
+\begin{defn}
+Given two random variables $X$ and $Y$, define the covariance between $X$ and $Y$ by
+\begin{displaymath}
+Cov (X,Y) = E\{(X-E(X))(Y-E(Y))\}
+\end{displaymath}
+but due to the linearity of the expection:
+\begin{align*}
+Cov (X,Y) &= E\{(X-E(X))(Y-E(Y))\}\\
+&=E\{(XY-XE(Y)-YE(X)+E(X)E(Y))\}\\
+&=E(XY)-E(X)E(Y)-E(Y)E(X)+E(X)E(Y)\\
+&=E(XY)-E(X)E(Y).
+\end{align*}
+\end{defn}
+Note: if $Cov (X,Y)=0,$ we say that $X$ and $Y$ are \textit{uncorrelated.} If $X$ and $Y$ are independent and have finite variances, then they are uncorrelated as well. However, $Cov(X,Y)=0$ does not imply that X and Y are independent.
+\begin{prop}
+Let $X_1\dots X_n$ be random variables with finite variance. Then
+\begin{displaymath}
+V(\sum_{i=1}^{n}X_i)=\sum_{i=1}^{n}V(X_i) + 2\sum_{i < j} Cov(X_i,X_j).
+\end{displaymath}
+\end{prop}
+\begin{cor}
+If $X_1,\dots X_n$ are pairwise uncorrelated, then
+\begin{displaymath}
+V(\sum_{i=1}^{n}X_i)=\sum_{i=1}^{n}V(X_i).
+\end{displaymath}
+\end{cor}
+\subsection*{Correlation}
+The \textit{correlation coefficient} between $X$ and $Y,$ denoted by $\rho_{X,Y}$ or $\rho(X,Y),$ is defined as:
+\begin{displaymath}
+\rho_{X,Y}=\frac{Cov(X,Y)}{\sigma_X \sigma_Y}=Cov\Bigg\{\Bigg(\frac{X-\mu_X}{\sigma_X}\Bigg)\Bigg(\frac{Y-\mu_Y}{\sigma_Y}\Bigg)\Bigg\}
+\end{displaymath} 
+we can say that, in a way, $\rho_{X,Y}$ is a measure of the linear dependence between $X$ and $Y$. This is a consequence of the following proposition.
+\begin{prop}
+\begin{enumerate}[(a)]
+\item $-1 \leq \rho_{X,Y} \leq 1 $
+\item $\rho(X,Y) =1$ if and only if $P(Y=aX+b)=1$ for some $a > 0$ and $b \in \Realnum.$ 
+\item $\rho(X,Y)=-1$ if and only if $P(Y =aX+b)=1$ for some $a < 0$ and $b \in \Realnum.$
+\end{enumerate}
+\end{prop}
+\subsection*{Distributions of multivariate transformations}
+\textbf{Ques.} Let $X=(X_1,\dots,X_n)$ be a random vector in $\probsp$ and consider the problem of determining the distribution of $Y=g(X)$ for some function $g: \Realnum^n \to \Realnum.$ What are the necessary conditions for $g$ in order for us to determine the distribution of $Y$? \\
+\textbf{Ans} $g$ has to be Borel measurable, so that it 'well-defined' in the following sense:
+\begin{defn}
+A function $g: \Realnum^n \to \Realnum$ is Borel measurable if $g^{-1}(B) \in \Borel^n, \forall B \in \Borel.$
+\end{defn}
+
+\begin{description}
+\item [\underline{A simple, particular case}:]
+\item When $g$ is strictly monotone, then $g^{-1}$ exists:
+\item[Case 1] $g$ increasing: $g(X) \leq Y \iff X \leq g^{-1} (Y)$. Then
+\begin{displaymath}
+F_{Y}(y) = F_{X} (g^{-1}(y)) = P(X \leq g^{-1} (Y))
+\end{displaymath}
+\item[Case 2] $g$ decreasing: $g(X) \leq Y \iff X \geq g^{-1} (Y)$. Then
+\begin{align*}
+F_{Y}(y) = F_{X} (g^{-1}(y))&=F_{X}(X \geq g^{-1}(Y))\\
+&= P(X \geq g^{-1}(Y))\\
+&=P(X> g^{-1}(Y))+P(X=g^{-1}(Y))
+\end{align*}
+\item[\underline{Another example:}]
+ Let $X_1,\dots, X_n \sim N(0,1)$.
+ If $A \in \Realnum^{n \times n}$ is an orthogonal matrix, then $Y=A X$ is also $N(0,1).$
+\end{description}
+
+
+\subsection*{Finding pdf: the method of the Jacobian}
+Supposed that $G \subset \Realnum^n$ and $H \subset \Realnum^n$ are open regions and $g:G \to H$ is a BIJECTION between $G$ and $H$, where
+\begin{displaymath}
+g(x) = (g_1(x),g_2(x),\dots,g_n(x))=y
+\end{displaymath}
+Then there exists an inverse function $h=g^{-1}:H \to G$ such that 
+\begin{displaymath}
+x_i=h_i(y), \hspace{8pt} i=1,\dots, n.
+\end{displaymath}
+Now, suppose that the partial derivatives
+\begin{displaymath}
+\frac{\partial x_i}{\partial y_j}=\frac{\partial h_i(y)}{y_i}
+\end{displaymath}
+exist and are continuous in $H$ for $i,j=1 \dots n.$ Then we define the Jacobian of the transformation $x \mapsto y $ as the determinant of the differential of $h$:
+\begin{align*}
+J_h(y)&=\det D h(y)\\
+&=\det \begin{pmatrix}
+\frac{\partial x_1}{\partial y_1} & \cdots & \frac{\partial x_1}{\partial y_n}\\
+\vdots& &\vdots\\
+\frac{\partial x_n}{\partial y_1} & \cdots & \frac{\partial x_n}{\partial y_n}
+\end{pmatrix}
+\end{align*}
+According to the change-of-variables theorem of multivariate calculus, if $J_h(y) \not = 0$ for all $y \in H,$ then
+\begin{displaymath}
+\int_A f(x) dx =\int_{g(A)} f(h(y)) |J_h(y)| dy
+\end{displaymath}
+for any $A \subset G$ and any integrable function $f.$
+\begin{thm}
+Let $X$ be a random vector with joint density $f_X,$ and let $g: G \to H$ be a continuously differentiable bijection between open regions $G \subset \Realnum^n$ and $H \subset \Realnum^n,$ with $h= g^{-1}$ such that $J_h(y)\not= 0, \forall y\in H.$ Then the random vector $Y = g(X)$ is absolutely continuous with density 
+\begin{displaymath}
+\boxed
+{
+f_Y(t) = \begin{cases}
+f_X(h(y)) |J_h(y)|, & y\in H\\
+0, & y \not\in H.
+
+\end{cases}
+}
+\end{displaymath}
+\end{thm}
+A result from the inverse function theorem implies that 
+\begin{displaymath}
+J_h(y)=\frac{1}{J_g(h(y))}.
+\end{displaymath}
+\begin{thm}
+If $X_1,\dots X_n$ is a random sample (i.i.d.) from an absolutely continuous distribution $F$ with density $f$, then the joint density of the order statistic $Y= (X_{(1)},\dots, X_{(n)})$ is given by
+\begin{displaymath}
+f_Y(y)=\begin{cases}
+n!\Pi_{i=1}^{n}f(y_i), & y_1 < y_2 <\dots < y_n\\
+0, & \text{otherwise.}
+\end{cases}
+\end{displaymath}
+\end{thm}
+
+\subsection*{Some standard cases}
+\begin{prop}
+\begin{enumerate}[(a)]
+\item If $X,Y$ have joint density $f(x,y)$, then $X+Y$ is absolutely continuous and 
+\begin{displaymath}
+f_{X+Y}(z)=\totalint f(z-t,t)dt=\totalint f(t,z-t)dt.
+\end{displaymath}
+\item If $X,Y$ are independent with respective marginal densities $f_X$ and $f_Y,$ then
+\begin{displaymath}
+f_{X+Y}(z)=\totalint f_X(z-t)f_Y(t)dt=\totalint f_X(t)f_Y(z-t)dt = f_X\ast f_Y.
+\end{displaymath} 
+\end{enumerate}
+\end{prop}
+\subsection*{Convergence theorems in expectations}
+\begin{description}
+\item[Two important theorems:] 
+\item[I)] Monotone Convergence Theorem
+\item[II)] Dominated Convergence Theorem
+\end{description}
+
+Consider the sequence of random variables $X_1,\dots X_n$ in $\probsp$, and suppose that $X_n \to X$ point-wise., that is $\lim_{n\to\infty}X_n(\omega)=X(\omega)$ for every $\omega \in \Omega.$\\
+\vspace{.1in}
+
+\textbf{Ques.}  Under what conditions is the limit of the expectations equal to the expectation of the limit?? \\
+\textbf{Ans.} $\lim_{n\to\infty}E(X_n)=E(\lim_{n\to\infty}=E(X_n))$ when
+\begin{enumerate}
+\item the variables are non-negative and the sequence is non-decreasing (Monotone Convergenve), and 
+\item when the sequence is uniformly bounded by an integrable random variable (Dominated Convergence )
+\end{enumerate}
+\begin{thm} [Monotone Convergence Theorem]
+Let $X_1,X_2,\dots $ and $X$ be random variables on a probability space $\probsp.$ If $0 \leq X_n \uparrow X$ point-wise, then $E(X_n) \uparrow E(X)$ (where $E(X)$ may be $\infty$).
+\end{thm}
+\begin{thm}[Dominated Convergence Theorem]
+Let $X_1,X_2,\dots, X$ and $Y$ be random variables on a probability space $\probsp$ such that $Y$ is integrable, $|X_n| \leq Y,  \forall n$ and $X_n \to X$ point-wise. Then $X_n$ and $X$ are integrable, and
+$\lim_{n\to\infty} E(X_n) =E(X).$  
+\end{thm}
+\textbf{Results:}
+\begin{enumerate}[(1)]
+\item If $X$ is a random variable such that $E(|X|^t) < \infty$ for some $t > 0,$ then the function $g$ defined as $g(s)=E(|X|^s)$ is continuous on the interval $(0,t].$
+\item \textit{Arzela's Theorem}. Let $f_1,f_2,\dots$ and $f$ be real Borel measurable functions defined on an interval $[a,b]$ and Riemann integrable. If $f_n \to f$ point-wise in $[a,b]$ and $|f_n| \leq M < \infty, \forall n,$ then
+\begin{displaymath}
+\int_{a}^{b} f_n(x)dx \to \int_{a}^{b} f(x) dx
+\end{displaymath}
+as $n\to \infty.$
+\item \textit{Convergence of Series} Let $a_{mn} \geq 0$ for $m,n \in \bigN$ be such that $a_{mn} \uparrow b_m$ for each $m$ when $n \to \infty.$ Then
+\begin{displaymath}
+\sum_{m=1}^{\infty} a_{mn} \uparrow \sum_{m=1}^{\infty} b_m
+\end{displaymath}
+as $n\to \infty.$
+\end{enumerate}
+
+\section*{3. Random Samples and Asymptotics}
+\begin{description}
+\item[Summary:]
+\item
+ The Law of Large Number states that the arithmetic mean of the $n$ observed values 
+\begin{displaymath} \bar{X}= \frac{x_1 + \dots + X_n}{n}
+\end{displaymath}
+is approximately $E(X)$ when $n$ is large. i.e., the $\bar{X}$ converges, \textit{ in some sense} , to $E(X)$ as $n \to \infty.$ We need to classify the modes of convergence. 
+\end{description}
+
+\subsection*{Convergence in probability}
+Let $Y_1,Y_2,\dots$ be random variables on the same probability space $\probsp.$
+\begin{defn}
+$Y_n$ converges to $Y$ \textbf{in probability} if for every $\epsilon > 0,$
+\begin{displaymath}
+P(|Y_n-Y|\geq \epsilon)\underset{n \to \infty} {\longrightarrow} 0
+\end{displaymath}
+Notation: $Y_n \overset{P}{\longrightarrow}Y$.
+\end{defn}
+\subsection*{Almost sure convergence}
+\begin{defn}
+$Y_n$ converges to $Y$ \textbf{almost surely} if 
+\begin{displaymath}
+P(\lim_{n\to\infty} Y_n {\longrightarrow}Y) =1,
+\end{displaymath} i.e., if the event
+\begin{displaymath}
+A_0=\{\omega\in\Omega: Y_n(\omega)\underset{n\to\infty} {\longrightarrow} Y(\omega) \}
+\end{displaymath}
+has probability 1. Notation: $Y_n \overset{a.s.}{\longrightarrow}Y.$
+\end{defn}
+
+\textbf{Note:}
+\begin{itemize}
+\item Almost sure convergence is point-wise convergence with probability 1; it is customary to say that $Y_n(\omega)$ converges to $Y(\omega)$ for 'almost every' $\omega$.
+\item Almost sure convergence $\implies$ convergence in probability.
+\item Convergence in probability $\not\implies$ almost sure convergence.
+\item Almost sure convergence is a stronger property!
+\end{itemize}
+\begin{prop}
+If $Y_n \overset{a.s}{\longrightarrow} Y,$ then $Y_n \overset{P}{\longrightarrow}Y$.
+\end{prop}
+$Proof.$ Suppose $Y_n \asto Y,$ and let $\epsilon > 0$ be fixed. We have to show that $P(|Y_n-Y|\geq \epsilon)\underset{n \to \infty} {\longrightarrow} 0,$ or equivalently, that $P(|Y_n-Y| < \epsilon) \to 1$ as $n\to \infty.$ Let $A_0=\{\omega \in \Omega: Y_{n}(\omega) \to Y(\omega)\},$ then for each $\omega \in A_0$ there is an $n(\omega)$ such that $|Y_k(\omega)-Y(\omega)| < \epsilon $ whenever $k \geq n(\omega).$ Let $A_n$ be the event '$|Y_k-Y| < \epsilon,  \forall k \geq n,$' i.e.,
+\begin{displaymath}
+A_n=\cap_{k=n}^{\infty} [|Y_k-Y| < \epsilon]
+\end{displaymath}
+If $\omega \in A_0$, then $\omega \in A_n$ for some n, thus $A_0 \subset \cup_{n=1}^{\infty} A_n$. Since $A_n \subset A_{n+1}, \forall n,$ we have 
+\begin{displaymath}
+P(A_0) \leq P(\cup_{n=1}^{\infty} A_n) =\lim_{n\to\infty} P(A_n)
+\end{displaymath}
+by property of probability measure. But $P(A_0)=1$ by hypothesis, so $P(A_n) \to 1$ as $n \to 1.$ Since $A_n \subset [|Y_n-Y|<\epsilon]$ by definition, it follows that $P(|Y_n-Y|<\epsilon) \to 1$ as $n \to 1.$ \qed
+\subsection*{Weak and strong Laws of Large Numbers.}
+Let $X_1,X_2,\dots$ be integrable random variables on $\probsp,$ and let $S_1,S_2,\dots$ be the partial sums, defined as $S_n=X_1+X_2+\dots+X_n,$ which are also random variables on $\probsp.$ We say that $X_1, X_2,\dots$ satisfies the \textit{Weak Law of Large Numbers} if 
+\begin{displaymath}
+\frac{S_n-E(S_n)}{n} \pto 0,
+\end{displaymath}
+and we say that the sequence satisfies the \textit{Strong Law of Large Numbers if}
+\begin{displaymath}
+\frac{S_n-E(S_n)}{n} \asto 0,
+\end{displaymath}
+\textbf{Note:} If the random variables $X_n$ have the same expectation $\mu$, then they satisfy the Weak Law (respectively the Strong Law) if and only if $\frac{S_n}{n}\pto \mu$ (respectively $\frac{S_n}{n}\asto \mu$), because $\frac{E(S_n)}{n}=\mu$ in this case.
+\begin{thm}[Chebychev's Weak Law.]
+Let $X_1,X_2,\dots$ be pairwise independent random variables with finite and uniformly bounded variances (i.e., there exists a $c <\infty$ such that $V(X_n) \leq c, \forall n$), Then the sequence $\{X_n\}_{n \geq 1}$ satisfies the Weak Law of Large Numbers: $\frac{S_n-E(S_n)}{n} \pto 0$
+\end{thm}
+\textbf{Note:} Strictly speaking, $X_n's$ need only to be \textit{uncorrelated}.
+\begin{cor}[Bernoulli's Law of Large Numbers (1713)] Consider a sequence of independent binomial trials that have the same probability $p$ of 'success'.  If $S_n$ is the number of 'successes' in the first $n$ trials, then $\frac{s_n}{n} \pto p$ in probability.
+\end{cor}
+\begin{thm}[Khintchin's Weak Law of Large Numbers] If $X_1,X_2,\dots$ are independent, identically distributed and integrable with common mean $\mu,$ then $\frac{S_n}{n} \pto \mu.$
+\end{thm}
+\textbf{Note:} In here, the assumption of finite variance is replaced by the assumption of i.i.d variables.
+\begin{prop}
+Let $F_1,F_2,\dots$ be a sequence of distribution functions. Then there exists a probability space $\probsp$ and a sequence of independent random variables $X_1,X_2,\dots$ on this space, such that $X_n \sim F_n$ for each $n.$
+\end{prop}
+\begin{thm}[Reciprocate of Kolmogorov's Strong Law] Let $X_1,X_2,\dots$ be i.i.d random variables. If $E(|X_1|) = +\infty$ with probability 1, the sequence 
+\begin{displaymath}
+\frac{|S_n|}{n}=\frac{|X_1+\dots+X_n|}{n}
+\end{displaymath}
+is unbounded.
+\end{thm}
+\begin{prop}[Kolmogorov's inequality] Let $X_1,\dots, X_n$ be independent random variables such that $E(X_k)=0$ and $V(X_k) < \infty$ for all $k=1,\dots,n$. Then, for any $\lambda > 0,$
+\begin{displaymath}
+P(\max_{1\leq k \leq n} |S_k| \geq \lambda) \leq \frac{1}{\lambda^2} V(S_n) =\frac{1}{\lambda^2} \sum_{k=1}^{n} V(X_k),
+\end{displaymath}
+where $S_k = X_1+\dots+X_k.$ 
+\end{prop}
+\begin{thm}[Kolmogorov's First Strong Law] Let $X_1,X_2,\dots$ be independent and integrable random variables, and suppose that 
+\begin{displaymath}
+\sum_{n=1}^{\infty} \frac{V(X_n)}{n^2} < +\infty.
+\end{displaymath}
+Then the sequence satisfies the Strong Law of Large Numbers, i.e.,
+\begin{displaymath}
+\frac{S_n-E(S_n)}{n} \asto 0
+\end{displaymath}
+\end{thm}
+\begin{thm} [Kolmogorov's Strong Law] Let $X_1,X_2,\dots$ be independent, identically distributed and integrable random variables, with $\mu = E(X_1).$ Then
+\begin{displaymath}
+\frac{X_1+\dots+X_n}{n}\asto \mu.
+\end{displaymath}
+\end{thm}
+\begin{cor}[Borel's Strong Law] Let $X_1,X_2,\dots $ be i.i.d random variables such that $P(X_1=1)=p$ and $P(X_1=0)=1-p.$ Then $\frac{S_n}{n} \asto p,$ where $S_n=X_1+\dots+X_n.$
+\end{cor}
+\subsection*{$\ast\ast$Central Limit Theorem.}
+\textbf{Important Result:} \\
+A sequence of random variables converges in distribution if and only if the sequence of their characteristic functions converges point-wise to the characteristic function of the limit.
+\begin{defn}[Characteristic function] Let $X$ be a (real-valued) random variable on $\probsp$. The characteristic function of $X$ is the function $\phi: \Realnum \to \mathbb{C}$ defined as 
+\begin{displaymath}\phi(t)=E(e^{itX}).
+\end{displaymath}
+\end{defn}
+The characteristic function of $X$ is solely determined by its distribution. Therefore, if $X$ and $Y$ are two random variables with the same distribution, then $\phi_X(t)=\phi_Y(t), \forall t\in \Realnum.$ Conversely, the distribution $F_X$ can be obtained from $\phi_X;$ thus of $\phi_X=\phi_Y$ then $X$ and $Y$ must have the same distribution. (Characteristic function \textit{characterizes} the distribution a random variable.)\\
+\vspace{1in}
+\textbf{Main properties of characteristic functions:}
+\begin{enumerate}
+\item[CF1.] A characteristic function is always bounded by 1: $|\phi(t)| \leq 1, \forall t \in \Realnum.$
+\item[CF2.] A characteristic function takes the value 1 at 0: $\phi(0)=1.$
+\item[CF3.] $\overline{\phi(t)}=\phi(-t),$ where $\bar{z}$ denotes the complex conjugate of $z=x+iy.$ (so $\bar{z}=x-iy$).
+\item[CF4.] $\phi$ is uniformly continuous on $\Realnum.$
+\item[CF5.] If $X_1,\dots,X_n$ are independent, then $\phi_{X_1+\dots+X_n}(t)=\phi_{X_{1}}(t)\times \cdots \times \phi_{X_n}(t).$
+\item[CF6.] The characteristic function of a random variable $X$ determines the distribution of $X.$ (Since the distribution of $X$ determines $\phi_X$ by definition, we have a one-to-one correspondence $\phi_X \leftrightarrow F_X.$ Then, for two random variables $X$ and $Y$ we have $\phi_X=\phi_Y \Leftrightarrow F_X=F_Y.$) 
+\item[CF7.] A random variable $X$ has a symmetric distribution around zero if and only if $\phi_X(t)$ is real for every $t$.
+\item[CF8.] If $Y=aX+b$ with $a$ and $b$ scalars, then $\phi_Y(t)=e^{itb}\phi_{X}(at).$
+\item[CF9.] If $E(|X^n|) < \infty$ for some $n$, then $\phi_X(t)$ is $n$-times continuously differentiable and 
+\begin{displaymath}
+\phi_{X}^{(k)}(t)=i^k E(X^k e^{ikt}), \forall t \in \Realnum, k=1,\dots,n)
+\end{displaymath}
+In particular, $\phi_X^{(k)}(0)=i^kE(X^k).$
+\end{enumerate}
+\begin{thm}[Inversion Formula]
+Let $X$ be a random variable with distribution function $F$ and characteristic function $\phi$. If $x$ and $y$ are continuity points of $F$ such that $x < y,$ then
+\begin{displaymath}
+F(y)-F(x)=\frac{1}{2\pi} \lim_{u\to\infty} \int_{-u}^{u} \frac{e^{-itx}-e^{-ity}}{it} \phi(t)dt.
+\end{displaymath}
+This theorem tells that we can find the distribution of a random variable given its characteristic function.
+\end{thm}
+\subsection*{Convergence in distribution}
+\begin{defn}[Convergence in Distribution]
+Let $X_1,X_2,\dots$ and $X$ be random variables with distribution functions $F_1,F_2,\dots$,and $F$ respectively. Then the sequence $\{X_n\}_{n\geq 1}$ converges in distribution to $X$ if $F_n(x)\underset{n\to\infty}{\longrightarrow}F(x)$ for every $x$ that is a continuity point of $F.$
+\end{defn}
+Notation: $X_n \dto X$ or $X_n\dto F.$\\
+\textbf{Note:} 
+\begin{itemize}
+\item Convergence in distribution is only defined in terms of the distribution of a random variable, not the random variable itself. Thus it is not necessary that the random variables are defined on the same probability space.
+\item $X_n \dto X$ if and only if $\phi_{X_n}(t) \ntends \Phi_X(t).$
+\end{itemize}
+\begin{prop}[**Central Limit Theorem for i.i.d. random variables**]
+
+Let $X_1,X_2,\dots$ be i.i.d random variables with common mean $\mu$ and common variance $\sigma^2$, where $0 < \sigma^2 < \infty.$ Let $S_n = X_1 +\dots + X_n.$ Then
+\begin{displaymath}
+\frac{S_n-E(S_n)}{\sqrt{V(S_n)}}=\frac{S_n-n\mu}{\sigma\sqrt{n}} \dto N(0,1).
+\end{displaymath}
+Equivalently, if we define $\bar{X}=\frac{x_1+\dots+X_n}{n},$ then
+\begin{displaymath}
+\sqrt{n}(\frac{\bar{X}-\mu}{\sigma} )\dto N(0,1)
+\end{displaymath}
+\end{prop}
+ \subsection*{Delta method.}
+ First, we introduce the Slutsky's theorem:
+ \begin{thm}[Slutsky's Theorem] let $\{X_n\}_{n\geq 1}$, $X$ and $\{Y_n\}_{n\geq 1}$ be random variables such that $X_n \dto X$ and $Y_n \pto c,$ where $c$ is a constant. Then
+ \begin{enumerate}[(a)]
+ \item $X_n + Y_n \dto X +c.$
+ \item $X_n - Y_n \dto X-c.$
+ \item $X_nY_n\dto cX.$
+ \item $\frac{X_n}{Y_n} \dto \frac{X}{c}, \text{if $c \not= 0$ and $P(Y_n \not= 0)=1$}.$
+ \end{enumerate} 
+ \end{thm}
+ The following result is broadly used in statistics, usually in conjunction with the CLT. Since it's based on a first-order Taylor approximation of a difference function, it's known as the 'Delta method'
+ 
+ \begin{thm} [The Delta Method] Let $\{Y_n\}_{n\geq1}$be random variables such that $\sqrt{n}(Y_n-\mu)\dto N(0,\sigma^2).$ If $g:\Realnum \to \Realnum,$ then $\sqrt{n}\{g(Y_n)-g(\mu)\} \dto N(0,\sigma^2\{g'(\mu)^2\})$
+ \end{thm}
+ \begin{description}
+ \item[Example] Let $X_1,X_2,\dots$ be i.i.d random variables such that $E(X_n)=\mu$ and $V(X_n)=\sigma^2, 0 < \sigma^2 < \infty.$ By the Central Limit Theorem:
+ \begin{displaymath}
+ \frac{S_n-n\mu)}{\sigma\sqrt{n}}=\frac{\sqrt{n}(\bar{X_n}-\mu)}{\sigma} \dto N(0,1).
+ \end{displaymath}
+ Then 
+ \begin{displaymath}
+ \sqrt{n} (\bar{X_n}-\mu) \dto N(0,\sigma^2),
+ \end{displaymath}
+ by Slutsky. The Delta method implies, for instance, that
+ \begin{displaymath}
+  \sqrt{n} (\bar{X_n}^2-\mu^2) \dto N(0,4\mu^2\sigma^2),
+ \end{displaymath}
+ and
+ \begin{displaymath}
+ \sqrt{n}\Bigg( \frac{1}{\bar{X_n}}-\frac{1}{\mu}\Bigg) \dto N\Bigg(0,\frac{\sigma^2}{\mu^4}\Bigg).
+ \end{displaymath}
+ \end{description}
+ \subsection*{The Central Limit Theorem: generalized version}
+ \textbf{Brefly explain the idea:} If we have a sequence of independent random variables $X_1,X_2,\dots$ defined on the same probability space $\probsp$, and let $S_1,S_2,\dots$ be the sequence of partial sums defined by $S_n=X_1+\dots+X_n.$ The Law of Large Numbers deals with the convergence of the arithmetic mean to the expected value of $X_n$, assuming that each of $X_n$ is integrable. When a sequence of random variables obey the LLN, there is a tendency that $\frac{S_n}{n}$ (the sample mean in case of i.i.d. random variables) concentrate around the their means. Now, if these random variables are \textit{standardized}, \textbf{under some general hypothesis}, they converge in distribution to $N(0,1).$\\
+ The \textit{Standardized Partial Sums} of a sequence of random variables is:
+ \begin{displaymath}
+ \frac{S_n-E(S_n)}{\sqrt{V(S_n)}}
+ \end{displaymath}
+ \textbf{Ques.} Under what conditions do the standardized partial sums converge to $N(0,1)$ in distribution?\\
+One solution is when $X_n's$ are i.i.d with common mean and common variance, then we have already seen that 
+\begin{displaymath}
+\frac{S_n-n\mu}{\sigma \sqrt{n}} \dto N(0,1)
+\end{displaymath} 
+\textbf{Important:} A big difference between CLT and LLN is that
+\begin{itemize}
+\item The LLN says that the sample mean $\frac{S_n}{n}$ converges to $\mu$, i.e., $(\frac{S_n}{n}-\mu) \to 0$ in probability (weak) or almost surely (strong), it says nothing about the distribution of the limiting R.V.
+\item The CLT says that the difference $\frac{S_n}{n}-\mu,$ \underline{when multiplied by $\sqrt{n}$}, converges \textit{in distribution} to a normal:
+\begin{displaymath}
+\sqrt{n} \Bigg( \frac{S_n}{n}-\mu \Bigg)  \dto N(0,\sigma^2).
+\end{displaymath}
+\end{itemize}
+\begin{thm}[Lindeberg's CLT] Let $X_1,X_2,\dots$ be independent random variables such that $E(X_n)=\mu_n$ and $V(X_n)=\sigma^2_n,$ where $\sigma^2_n < \infty$ for all $n$ and all $\sigma^2_n > 0$ for at least one $n$. Let $F_n$ be the distribution function of $X_n.$ As usual, $S_n=X_1 + \dots + X_n.$ and $s_n = \sqrt{V(S_n)}=\sqrt{\sigma^2_1+\dots+\sigma^2_n}$. Then, in order that 
+\begin{displaymath}
+\frac{S_n-E(S_n)}{s_n} \dto N(0,1)
+\end{displaymath}
+when $n\to \infty,$ it is sufficient that for all $\epsilon > 0,$
+\begin{equation}
+\lim_{n\to \infty} \frac{1}{s_n^2} \sum_{k=1}^{n}\int_{|x-\mu_k|>\epsilon n} (x-\mu_k)^2 dF_k(x) =0
+\end{equation}
+\end{thm}
+\begin{thm}[Lyapunov's CLT]
+Let $X_1,X_2,\dots$ be independent random variables such that $E(X_n)=\mu_n$ and $V(X_n)=\sigma^2_n,$ where $\sigma^2_n < \infty$ for all $n$ and all $\sigma^2_n > 0$ for at least one $n$. Let $F_n$ be the distribution function of $X_n.$ Let $s_n^2=V(S_n)=\sigma^2_1+\dots+\sigma^2_n.$ If there is $\delta > 0$ such that 
+\begin{displaymath}
+\frac{1}{s_n^{2+\delta}}\sum_{k=1}^{n} E(|X_k-\mu_k|^{2+\delta}) \ntends 0,
+\end{displaymath}
+then
+\begin{displaymath}
+\frac{S_n-E(S_n)}{s_n}\dto N(0,1).
+\end{displaymath}
+
+\end{thm}
+
+\section*{4. Point Estimation}
+In point estimation, a single value is computed from the data $x$ and used as an estimate of $\theta_i$
+\subsection*{Probability}
+Given a random variable $X$ with density or pmf $f(x.\theta)$, $\theta$ known. Then we can compute: $E(X), V(X), P(X \in A)$ s.t. $A\in \mathbb{R}$
+In principle, a \textit{random sample} $X_1,\dots,X_n$ i.i.d. are from the same population. A few things we know:
+\begin{itemize}
+\item $\bar{X} \to E(X)$ in probability, i.e. for every $\epsilon >0$
+\begin{displaymath}
+\lim_{n\to \infty}P(|\sum_{i=1}^{n}{X_i}-E(X)| \geq \epsilon) = 0
+\end{displaymath}
+\item $\frac{\bar{X}-E(X)}{\sqrt{V(X)}}\to N(0,1)$ in distribution
+\end{itemize}
+assuming we know the distributions of the $X_n's$
+\subsection*{The difference in Statistics}
+We have : population, random variable $X.$\\ 
+We assume: $X$ has absolutely continuous distribution function, i.e. it has density $f_X(x)$.\\
+But $f_X$ is \textit{unknown}. So we assume $f_X(x)$ is known up to a parameter $\theta: f(x)=f(x,\theta)$, where $\theta$ is unknown. e.g. $f(x)$ is exponential with $\theta$, but $\theta$ is unknown.
+\subsection*{Parametric statistics}
+General idea: try to estimate parameters of a distribution (known up to some parameter, say $\theta$)
+\begin{itemize}
+\item Possible knowledge/ Hypothesis: range of $\theta$
+\item Estimation
+\end{itemize}
+when density is known with an unknown $\theta$, we can:
+\begin{itemize}
+\item Take a sample from the population and observe the value of $X$ for each independent $X_1,\dots X_n$
+\item Suppose the $\theta$ we want is $E(X)$, we can estimate $\theta$ by using $\hat{\theta}=\frac{1}{n}\sum_{i=1}^{n}X_i$ (sample size $n$)
+\item Say, $\hat{\theta}=3.7$, what can we say about $\theta$?
+\end{itemize}
+Two approaches:
+\begin{enumerate}
+\item Frequentist $\implies$1 population and take multiple samples, and see the \textit{frequency} of $\theta.$
+\item Bayesian $\implies$ many populations, assuming $\theta$ is an R.V. (instead of fixed), and that you know the distribution of $\theta$, which has more assumption that the frequentist approach.
+\end{enumerate}
+\subsection*{Decision Theory}
+\begin{enumerate}[1)]
+\item Parameter space: $\Theta \subset \Realnum^{d}$ for $d \geq 1$
+\item Sample space $\chi$: where the datum $x=(x_1,\dots x_n)$ lives.
+\item Family of distribution: $\mathscr{P}\{f(x,\theta): x\in \chi, \theta \in \Theta \}$
+\item Action space: $\mathscr{A}$
+\item Loss function: $L: \Theta \times \action \to \Realnum$  (What do I lose if I lost two values of the data) We want to make loss as small as possible. Typical loss function : squared error. $L(\theta, d)=(\theta-d)^2$
+\item Decision: $\dec: \chi \to \action$ (from sample to action.)$\dec=\{d: \chi \to \action\}$
+\end{enumerate} 
+$L(\theta, d(x))$ : loss from a particular observation $x$, when the parameter is $\theta$, and using decision rule $d.$
+\subsection*{Risk theory}
+\begin{defn} The risk is the 'average loss' of a decision rule $d$ for a given parameter value $\theta$, mathematically,
+\begin{align*}
+R(\theta, d) &= E_{\theta} \{L(\theta, d(x))\}\\
+&= \begin{cases}
+\int_{\chi} L(\theta, d(x))f(x,\theta)dx & \text{ if $\chi$ is absolutely continuous.}\\
+\sum_{\chi} L(\theta, d(x)) p(x,\theta)  & \text{ if $\chi$ is discrete.}
+\end{cases}
+\end{align*}
+\end{defn}
+\subsection*{Minimax Criterion}
+\begin{defn}
+The maximum possible risk for a given $d$ is defined as 
+\begin{displaymath}
+MR(d)=\max_{\theta \in \Theta} R(\theta, d)
+\end{displaymath}
+A minimax rule, if exists, is such that 
+\begin{displaymath}
+MR(d^*)=\min_{d\in\dec}MR(d)
+\end{displaymath}
+\end{defn}
+\subsection*{Randomized decision rule}
+\begin{defn}
+Suppose $\dec= \{d_1,\dots, d_I\}.$ Then $d$ is a randomized decision rule if
+\begin{displaymath}
+d=\sum_{i=1}^{I} \tau_i d_i,
+\end{displaymath}
+where $(\tau_1,\dots,\tau_I ) \sim multinom(1,\textbf{p})$, is independent of the sample data $\chi$, and takes on values $\{0,1\}$ only.
+\end{defn}
+Given that we have a randomized decision rule, the risk becomes:
+\begin{align*}
+R(\theta, d)&= E_{\theta} \{L(\theta, \sum_{i=1}^{I} \tau_i d_i(x))\}\\
+&= E_{\theta} \{L(\theta, d_1(x)) p(\tau_1=1) +\dots + L(\theta, d_I(x))p(\tau_I=1)\}\\
+&=E_{\theta}\{L(\theta,d_1(x))p_1+\dots+L(\theta,d_I(x))p_I\}\\
+&=\sum_{i=1}^{I} E_{\theta}\{L(\theta, d_i(x))p_i\}\\
+&=\sum_{i=1}^{I} R(\theta, d_i) p_i
+\end{align*}
+\subsection*{Risk vector}
+\begin{defn}If $\Theta=\{\theta_1,\dots, \theta_T\}$ is finite, we define a risk vector associated with $d$ as $(R(\theta_1,d_1),R(\theta_2,d_2),\dots, R(\theta_T,d_T))$
+\end{defn}
+\subsection*{Decision vector}
+\begin{defn}
+A decision rule $d$ is \textbf{inadmissable} if there exists another decision rule $d^*$ such that
+\begin{displaymath}
+R(\theta, d^*) \leq R(\theta^*, d^*) < R(\theta^*,d).
+\end{displaymath}
+for all $\theta \in \Theta$ and there is a $\theta^*$ such tat $R(\theta^*, d^*) < R(\theta^*,d).$
+Basically, a rule is inadmissible if it can be improved by another decision rule and another parameter.\\
+A rule is said to be \textbf{admissable} if it is not inadmissable.
+\end{defn}
+Note: We don't want inadmissalbe rules.
+\subsection*{Bayes rule (Minimax rules)}
+\begin{itemize}
+\item The idea is that we have a set of decision rules $d: \chi \to \mathcal {A}$ (from info to action). 
+\item For each rule $d$, there is an associated risk $R(\theta,d)=E_{\theta} \{L(\theta, d(x))\}.$
+\item If $\Theta$ is discrete, let $\pi(\theta)$ be pmf.
+\item If $\Theta$ is non-discrete, let $\pi(\theta)$ be pdf.
+\begin{defn}[Bayes rule of $d$]
+\begin{displaymath}
+\begin{cases}
+r(\pi, d)=\sum_{\theta\in \Theta} R(\theta, d) \pi(\theta) & \text{ if $\pi$ is a pmf} \\
+r(\pi, d)=\int_{ \Theta} R(\theta, d) \pi(\theta) d\theta & \text{if $\pi$ is a pdf}
+\end{cases}
+\end{displaymath}
+The bayes rule, $d_\pi$ is the rule that minimizes $r(\pi,d)$ for a given $\pi.$
+\end{defn} 
+\begin{thm}
+If a Bayes rule is unique, then it is admissable.
+\end{thm}
+\end{itemize}
+\subsection*{Examples of point estimations}
+\begin{description}
+\item[Case 1] Suppose the loss function is the squared error: $L(\theta, d)=(\theta-d)^2$. For observed $X=x,$ the Bayes estimator choose $d=d(x)$ to minimize
+\begin{displaymath}
+\int_{\Theta} (\theta-d)^2\pi(\theta|x) d\theta \text{\hspace{.2 pt} (Expected posterior loss)}
+\end{displaymath}
+\item differentiating wrt $d,$ we find
+\begin{displaymath}
+\int_{\Theta} (\theta-d) \pi(\theta|x) d\theta =0 
+\end{displaymath}
+\item Since $\int_{\Theta} \pi(\theta|x) d\theta =1,$ we must have that 
+\begin{displaymath}
+d=\int_{\Theta} \theta \pi(\theta|x) d\theta = E(\theta|x)
+\end{displaymath}
+\end{description}
+
+\subsection*{Maximum likelihood}
+\begin{itemize}
+\item[] \textbf{Maximum likelihood estimator}
+\item
+Suppose $x$ is the observed value of a random variable $X$, and $X \sim f(x;\theta),$ where $\theta =(\theta_1,\dots,\theta_d)\in\Theta \subset \Realnum^{d}$ for some $d \geq 1.$
+\item The likelihood function is defined by
+\begin{displaymath}
+L(\theta) \equiv  L(\theta; x) = f(x|\theta)
+\end{displaymath}
+as a function of $\theta$ for a fixed $x.$
+\item (More usual case) Consider when $X=(X_1,\dots,X_n)$ where the $X_i's $ are i.i.d., then
+
+\begin{displaymath}
+\boxed
+{
+L(\theta) = \Pi_{i=1}^{n}f(x_i|\theta)
+}
+\end{displaymath}
+
+\item The maximum likelihood estimate (MLE) $\hat{\theta}(x)$ is the value of $\theta$ which maximize $L(\theta):$
+\item Often times it is convenient to look at the \textit{log-likelihood} of $x$ given $\theta,$ since $\log$ is a strictly increasing function, it is easier to find the maximum $\theta:$
+\begin{displaymath}
+l(\theta)=\sum_{i=1}^{n} \log (f(x_i|\theta))
+\end{displaymath}
+\item Some good examples are Poisson, Gamma, and normal R.V.
+\end{itemize}
+
+\subsection*{Method of moments}
+\begin{itemize}
+\item A method of deriving estimators
+\item Idea is to derive a moment estimator using sample moment. This is generally a good method of finding consistent estimator, i.e. for all $\epsilon > 0, \lim_{n\to \infty} P(|\hat{\theta}_n-\theta_{0}| \leq \epsilon) =1$
+\item Consider a parametric problem where $X_1,\dots,X_n$ are i.i.d RV's from sample $P_\theta, \theta \in \Theta \subset \Realnum^{k},$ and $E(|X_1|^k) < \infty.$ Let $\mu_{j}=E(X_1^{j})$ be the $jth$ moment of $X$ and let 
+\begin{displaymath}
+\boxed
+{
+\hat{\mu}_j=\frac{1}{n} \sum_{i=1}^{n}X_1^{j}} \hspace{1in} j=1,\dots,k
+\end{displaymath} 
+be the $jth$ sample moment. Typically,
+\begin{displaymath}
+\mu_{j}=h_{j}(\theta), \hspace{1in} j=1,\dots,k
+\end{displaymath}
+for some function $h_j $ on $\Realnum^k$. Substituting with $\hat{\mu}_j$, we have
+\begin{displaymath}
+\hat{\mu}_{j}=h_{j}(\hat{\theta}), \hspace{1in}, j=1,\dots,k.
+\end{displaymath}
+
+\end{itemize}
+\newpage
+\subsection*{Sufficiency and completeness}
+\begin{itemize}
+\item Mainly concerned with the point estimation of a parameter $\theta.$ In many cases, we can summarize all the information about $\theta$ contained in a random variable $X$ by a function $T=T(X)$
+\item \textit{Sufficient statistic:} Intuitively, $T=T(X)$ is a sufficient statistic if it gives all the information there is about $\theta$ in the RV $X.$
+\item \textit{Minimal sufficient statistic:} The sufficient statistic which summarizes the info as efficiently as possible. This is essentially a unique statistic.
+\begin{defn}[Likelihood Ratio] The function
+\begin{displaymath}
+\Lambda_x(\theta_1,\theta_2)=\frac{f(x|\theta_1)}{f(x|\theta_2)}
+\end{displaymath}
+is the likelihood ratio for one parameter $\theta=\theta_1$ relative to $\theta=\theta_2.$
+\end{defn}
+\begin{lemma} let $t(x)$ denote some function of $x.$ TFAE:
+\begin{enumerate}
+\item[(i)] There exist functions $h(x)$ and $g(t|\theta)$ such that 
+\begin{displaymath}
+f(x|\theta)=h(x)g(t(x)|\theta)
+\end{displaymath}
+\item[(ii)] For any pair $x, x'$ such that $t(x)=t(x'):$
+\begin{displaymath}
+\Lambda_x(\theta_1,\theta_2)=\Lambda_{x'}(\theta_1,\theta_2)
+\end{displaymath}
+for all $\theta_1, \theta_2.$
+\end{enumerate}
+\end{lemma}
+\subsection*{Sufficiency}
+The statistic $T=T(X)$ is \textit{sufficient} for $\theta$ if the distribution of $X| T(X)=t$ is \textit{independent} of $\theta.$\\
+\vspace{.1in}
+\textbf{Two criteria of sufficiency}  (T(X) is sufficient for $\theta$ if ...)
+\begin{itemize}
+\item[(a)] Factorization theorem (part (i) of Lemma 4). There exist functions $h(x)$ and $g(t|\theta)$ such that 
+\begin{displaymath}
+f(x|\theta)={h(x)}{g(t(x)|\theta)}
+\end{displaymath}
+\item[(b)] Likelihood Ration Criterion  (part (ii) of Lemma 4). For any pair $x, x'$ such that $t(x)=t(x'):$
+\begin{displaymath}
+\Lambda_x(\theta_1,\theta_2)=\Lambda_{x'}(\theta_1,\theta_2)
+\end{displaymath}
+for all $\theta_1, \theta_2.$
+
+\end{itemize}
+\subsection*{The Cramer-Rao lower bound}
+\item The CRLB sets a lower bound for any \textit{unbiased} estimator
+\item If we can find an estimator that achieves this lower bound, then we have found the UMVU (Uniformly Minimum Variance Unbiased) estimator!
+\item Let $W(X)$ be any estimator of $\theta$, let $m(\theta)= E_{\theta}\{W(X)\}$
+\item Define
+\begin{displaymath}
+Y=W(X), \hspace{.5in} Z= \frac{\partial}{\partial \theta} \log f(X| \theta).
+\end{displaymath}
+where $E(Z)=0$
+\item $-1\leq1 Corr(Y,Z) \leq 1 $ implies that 
+\begin{displaymath}
+\cov(Y,Z) \leq \var(Y)\var(Z)
+\end{displaymath}
+\item Also, we have that
+\begin{displaymath}
+\cov(Y,Z) = m'(\theta)
+\end{displaymath}
+and 
+\begin{displaymath}
+V(Z)=E\{\frac{\partial}{\partial \theta} \log f(X| \theta)^2\} = i(\theta)
+\end{displaymath}
+\item The result is:
+\begin{displaymath}
+\boxed
+{
+\var\{W(X)\} \geq \frac{(m'(\theta)^2)}{i(\theta)} =\frac{(\cov(Y,Z)^2)}{\var(Z)} 
+}
+\end{displaymath}
+This is called the \textit{Cramer-Rao lower bound.} The variance of any estimator is always bounded below  by something.
+
+\subsection*{Consistency}
+\item Let $\hat{\theta_n}$ denote an estimator of a parameter $\theta$ based on a sample of size $n$. 
+\item $\hat{\theta_n}$ is \textit{weakly consistent} if $\hat{\theta_{n}} \pto \theta$
+\item $\hat{\theta_n}$ is \textit{stronglyly consistent} if $\hat{\theta_{n}} \asto \theta$
+
+\end{itemize}
+
+
+\subsection*{Asymptotics: consistency, asymptotic normality, asymptotic distribution of the MLE, asymptotic efficiency.}
+
+\section*{5. Hypothesis Testing}
+\begin{itemize}
+\item Optimal procedure for finding the estimated parameter
+\item Neyman-Pearson Theory of Hypothesis testing
+\item $\Theta$ = parameter space
+\item $\Theta=\Theta_{0} \cup \Theta_{1}, \hspace{.2 in} \Theta_{0}\cap \Theta_{1} = \emptyset.$
+\item $\Theta_{0} \implies$ null hypothesis; $\Theta_{1} \implies$ alternative hypothesis
+\item $H_{0}: \theta \in \Theta_{0}, \hspace{.2in} H_{1}: \theta \in \Theta_1$
+We typically start with assuming that $H_{0}$ is true (so it's asymmetric). Mathematically,  we adopt the following criterion: fix a small number $\alpha \in (0,1)$ and seek a test of size $\alpha,$ so that 
+\begin{displaymath}
+P_{\theta}\{\text{Reject  } H_{0}\} \leq \alpha \hspace{.2in} \forall \theta \in \Theta_{0}.
+\end{displaymath}
+\item As usual: $X=$ data vector
+\item $f(x,\theta)=$ joint pmf/pdf of $X$
+\item We will observe our data and make a decision on the basis of that. 
+\item Given a certain pdf/pmf $f(x, \theta),$ we need to come up with a $\phi(x)$ that is \textit{optimal.}
+\item Test function: if
+\begin{displaymath}
+\phi(x)=
+\begin{cases}
+1 & \text{Reject $H_{0}$ (accept $H_1$)}\\
+0 & \text{Don't reject $H_{0}$ (accept $H_0$)}
+\end{cases}
+\end{displaymath}
+\end{itemize}
+\begin{description}
+\item[Type I error:] Rejecting $H_0$ when $H_0$ is true. (e.g. sending an innocent man to prison)
+\item[Type II error:] Failed to reject $H_0$ when $H_1$ is true. (e.g. not enough evidence to send (in fact guilty) man to prison.)
+\item Type I error is \textit{worse} than type Ii error. So we want to design a test function that is optimal in finding the right answer.
+\subsection*{Test functions}
+\begin{enumerate}
+\item Choose a test function $t(X)$ (some function of the observed data $X$).
+\item Choose a critical region $C_{\alpha}$
+\item Reject $H_0$ based on $X=x$ if and only if $t(x) \in C_{\alpha}$
+\item $C_{\alpha}$ must satisfy (test is size $\alpha$)
+\begin{displaymath}
+P_{\theta}\{t(X) \in C_{\alpha} \} \leq \alpha \hspace{.2in} \forall \theta \in \Theta_{0}.
+\end{displaymath}
+\end{enumerate}
+\newpage
+\subsection*{Standard procedure } 
+Reject $H_{0}$ If $\bar{X} > z_{\alpha} \sqrt{n}$, where $z_{\alpha}$ is the upper-$\alpha$ point of the standard normal distribution. In this case:
+\begin{displaymath}
+t(X)=\bar{X}, \vspace{.1in} C_{\alpha}=\{t: t > z_{\alpha}\sqrt{n}\}.
+\end{displaymath}
+so 
+\begin{displaymath}
+\phi(x)=
+\begin{cases}
+1 & t(x)\in C_{\alpha}\\
+0& o.w.
+\end{cases}
+\end{displaymath}
+\subsection*{Power}
+The power function of a test $\phi$ is defined as 
+\begin{displaymath}
+w(\theta)=P_{\theta}\{\text{Reject  } H_{0}\}=E_{\theta} \{\phi(X)\} =
+\begin{cases}
+\int_{\chi} \phi(x)f(x,\theta) dx & \text{continuous case}\\
+\sum_{x} \phi(x)f(x,\theta) & \text{discrete case}.
+\end{cases}
+\end{displaymath}
+
+\begin{itemize}
+\item When testing a simple null hypothesis against a simple alternative hypothesis, the term 'power' is often used to signify the probability of rejecting the null hypothesis when the alternative hypothesis is true.
+\item The idea: a good test will make $w(\theta)$ as large as possible on $\Theta_1,$ while satisfying the constraint $w(\theta) \leq \alpha$ for all $\theta \in \Theta_{0}$. (so it's got high probability of rejecting $H_0.$)
+\end{itemize}
+\subsection*{The Neyman-Pearson Theorem (Likelihood ratio test)}
+\begin{itemize}
+\item Gives optimal test of simple hypothesis testing
+\item Optimal means: largest possible powers
+\item Let the pdf or pmf of $X$ be $f(x|\theta)$
+\item Let $f(x|\theta_{1})=f_{1}(x)$, and $f(x|\theta_{0})=f_{0}(x|\theta)$, and define the likelihood ration $\Lambda(x)$ by
+\begin{displaymath}
+\Lambda(x)=\frac{f_{1}(x)}{f_{0}(x)}.
+\end{displaymath}
+\end{itemize}
+
+\begin{thm}[Neyman-Pearson]
+Let $\Theta_{0}=\{\theta_0\}$ and $\Theta_1=\{\theta_1\}.$ Let $\Lambda(x)$ be the likelihood ratio. Then the MOST POWERFUL TEST of size $\alpha$ is:
+\begin{displaymath}
+\phi^{*}(x) =
+\begin{cases}
+1 & \Tif \Lambda(x) > K_\alpha,\\
+\gamma_{\alpha} & \Tif \Lambda(x) = K_{\alpha} ,\\
+0 & \Tif \Lambda(x)< K_{\alpha},
+\end{cases}
+\end{displaymath} 
+where $K_{\alpha}$ and $\gamma_{\alpha}$ are unique constants that satisfies 'the size of the test is $\alpha$' ($w_{\phi}(\theta_{0}) \leq \alpha$).
+\end{thm}
+\end{description} 
+\subsection*{Uniformly most powerful test}
+\begin{defn} A uniformly most powerful test of size $\alpha$ is test $\phi_{0}(\cdot)$ for which
+\begin{enumerate}
+\item[(i)] $E_{\theta} \phi_{0} (X) \leq \alpha$ for all $\theta \in \Theta_{0}$ (satistifes the test size)
+\item[(ii)] given any other test $\phi(\cdot)$ for which $E_{\theta} \phi(X) \leq \alpha$ for all $\theta \in \Theta_{0},$ we have $E_{\theta} \phi_{0}(X) \geq E_{\theta} \phi(X)$ for all $\theta \in \Theta_{1}.$
+\end{enumerate} 
+\end{defn}
+\subsection*{Monotone likelihood ratio families}
+\begin{defn}
+The family of densities $f(x|\theta)$ satisfies the monotone likelihood ratio if there exists a function $t(x)$ such that the likelihood ration
+\begin{displaymath}
+\frac{f(x|\theta_2)}{f(x|\theta_1)} 
+\end{displaymath}
+is a non-decreasing function of $t(x)$ whenever $\theta_1 \leq \theta_2.$
+\end{defn}
+\begin{thm}
+Suppose $X$ has a distribution from a family which is MLR wrt a statistic $t(X),$ and that we wish to test $H_0 : \theta \leq \theta_{0} $ against $H_1: \theta > \theta_0$. Suppose the distribution function of $t(X)$ is continuous.
+\begin{enumerate}
+\item[(a)] The test 
+\begin{displaymath}
+\phi_{0}(x) =
+\begin{cases}
+1 & \Tif t(x) > t_0\\
+0 & \Tif t(x) \leq t_0
+\end{cases}
+\end{displaymath}
+is UMP among all tests of size $\leq E_{\theta} \{\phi_{0}(X)\}$
+\item[(b)] Given some $\alpha \in [0,1],$ there exists some $t_0$ such that the test in $(a)$ has size exactly $\alpha.$
+\end{enumerate} 
+\end{thm}
+\subsection*{Asymptotic likelihood ratio tests, Wald-type tests.}
+ \end{document}
