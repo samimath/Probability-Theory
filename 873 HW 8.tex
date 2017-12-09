@@ -1,0 +1,92 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}                 
+\geometry{letterpaper}                 
+ \usepackage{graphicx}
+\usepackage{amssymb,amsmath,amsfonts}
+
+\newcommand{\rr}{{\mathbb R}}
+ \newcommand{\F}{{\mathcal F}}
+ \newcommand{\G}{{\mathcal G}}
+ \newcommand{\LL}{{\mathcal L}}
+ \newcommand{\M}{{\mathcal M}}
+ \newcommand{\pr}{{\mathbb P}}
+ \newcommand{\N}{{\mathbb N}}
+\newcommand{\ex}{{\mathbb E}}
+\newcommand{\ind}{{\mathbb I}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\B}{{\mathcal B}}
+\newcommand{\Fil}{{\mathcal F}}
+\newcommand{\T}{{\mathcal T}}
+\newcommand{\var}{{\text{Var}}}
+\newcommand{\cov}{\text{Cov}}
+\newcommand{\rto}{\Rightarrow}
+\newcommand{\e}{{\varepsilon}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\abs}[1]{\left\vert #1\right\vert}
+\newcommand{\norm}[1]{\left\| #1\right\|}
+\newcommand{\charfun}{\phi_{n_k}(\frac{t}{s_n})}
+\newcommand{\charind}{\frac{itX_{nk}}{s_n}}
+\newcommand{\poiind}{\frac{it}{\sqrt{\lambda}}}
+\newcommand{\posint}{[0,\infty]}
+\parskip=10pt
+  
+  \begin{document}
+ 
+\begin{center}
+{\bf \large MATH 873 Homework 8}
+\\
+Sami Cheong
+\\
+\today
+\end{center}
+\begin{enumerate}
+\item Let $W = \{W_t,\F_t, 0 \leq t < \infty\}$ be a standard 1-d Brownian motion. Let $f : [0,\infty) \to \rr$ s.t. $\int_{0}^{T} f^2(s) ds < \infty, T > 0$. Let $X_t = \int_{0}^{t} f(s) dW_s, 0\leq t < \infty.$ Show that $\{X_t, \F_t , 0\leq t < \infty\}$ is Gaussian process with mean 0 and covariance function $\rho(s,t) = \int_{0}^{s\wedge t} f^2(u) du.$
+\item[Pf.] Let $t >0$ be fixed. We can see that the stochastic process $X_t$ satisfies the SDE
+\[
+dX_t = f(t) dW_t
+\]
+with $X_0 = 0.$ Now consider another the function $g(t,x)=e^{ux_t},$ and let $Z_t = g(X_t).$ First we have the following:
+\[
+\frac{\partial g}{\partial t} = e^{uX_t} dX_t,\frac{\partial g}{\partial x} = u e^{uX_t}, \frac{\partial^2 g}{\partial x^2} =u^2e^{uX_t} 
+\]
+Therefore, by It\^o's formula:
+\begin{align*}
+dZ_t & = \frac{\partial g}{\partial t} dt + \frac{\partial g}{\partial x} dX_t + \frac{1}{2}\frac{\partial^2 g}{\partial x} (dX_t)^2\\
+\intertext{Note that : $\frac{\partial g}{\partial t}dt = e^{uX_t} dX_tdt =e^{uX_t} f(t) dW_tdt = 0$, and $(dX_t)^2 = dt$, thus}
+dZ_t & = ue^{uX_t} dX_t + \frac{1}{2}u^2 e^{uX_t} f^2(t)dt\\
+Z_t & = 1 + \int_{0}^{t} ue^{uX_s} f(s)dW_s + \frac{1}{2} u^2\int_{0}^{t} e^{uX_s} f^2(s)ds
+\intertext{Now, since $\int_{0}^{t} ue^{uX_s} f(s)dW_s $ is a stochastic integral, it satisfies the martingale property. Thus we have $\ex[\int_{0}^{t} ue^{uX_s} f(s)dW_s] = 0,$ this implies that:}
+\ex[Z_t] & = 1 + \frac{1}{2} u^2 \int_{0}^{t} f^2(s) \ex[{Z_s}] ds \tag{1}
+\end{align*}
+If we let $y : = \ex[Z_t]$ from (1), we can derive the following ODE:
+\[
+y'-A(t)y = 0 \tag{2}
+\]
+where $A(t) = \frac{1}{2}\int_{0}^{t} f^2(s)ds$, and initial condition $Z_0 = 1.$ Thus, by multiplying both side of (2) with the integration factor $e^{-\int_{0}^{t}A(s) ds}$, we can solve for (2) and obtain
+\[
+y:=\ex[Z_t] = \exp\{\frac{1}{2} u^2 \int_{0}^{t} f^2(s) ds\}
+\]
+This is precisely the moment generating function of a univariate Normal random variable with mean 0 and variance $\int_{0}^{t} f^2(s)  ds.$ To  show that $X_t$ is a Gaussian process,  first consider for $s < t$ the joint variable $(X_s, X_t -X_s)$. 
+%\begin{itemize}
+%\item[a)] One can argue that since $X_t$ is a stochastic integral with respect to the Brownian motion, it should also preserve the stationary increment property, which would imply that
+%\begin{align*}
+%\ex[X_s(X_t-X_s)] & = \ex[\int_{0}^{s} f(u) dW_u \int_{s}^t f(v) dW_v] = 0\\
+%\intertext{Thus, $ \ex[X_s(X_t-X_s)] = \ex[X_s]\ex[X_t-X_s] = 0$  }
+%\end{align*}
+Notice that since \[ \ex[{\exp\{\frac{1}{2} \int_{0}^{T} |f^2(s)| ds\}] \leq \exp \{\int_{0}^{T} |f^2(s)| ds\} < \infty}, \] we have that \[ M_t : = \exp \{ u_s X_s + u_t (X_t-X-s) - \frac{1}{2} [u^2_s \int_{0}^{s} f^2 (u) du + u^2_t \int_{s}^{t} f^2(v) dv]\} \]
+is a martingale. Thus, $\ex[M_t] = M_0 = 1,$ this implies
+\[\ex\bigg{[}  \exp \{ u_s X_s + u_t (X_t-X_s) - \frac{1}{2} [u^2_s \int_{0}^{s} f^2 (u) du + u^2_t \int_{s}^{t} f^2(v) dv]\}  \bigg{]}= 1\]
+\begin{align*}
+\ex\bigg{[}  \exp \{ u_s X_s + u_t (X_t-X_s)\bigg{]}& = \exp\{  \frac{1}{2} u^2_s \int_{0}^{s} f^2 (u) du + u^2_t \int_{s}^{t} f^2(v) dv\}\\
+& = \underbrace{\exp\{ \frac{1}{2} u^2_s \int_{0}^{s} f^2 (u) du\} }_{A} \underbrace{\exp \{ \frac{1}{2} u^2_t \int_{s}^{t} f^2 (v) dv\}}_{B}  
+\end{align*}
+By factorization, we can see that $X_s$ and $(X_t-X_s)$ are independent Normal r.v.'s with moment generating function A and B respectively. Since sum of independent Normal r.v.'s is still a Normal r.v., we can generalize and let $I(t_n) = X(t_n) - X(t_{n-1})$, then by the fact that $X_{t_n} = \sum_{i=1}^{n} I(t_i)$, we conclude that $X(t_1),\dots, X(t_n)$ are jointly normally distributed.
+\\
+Finally, we need to show that $\ex[X_sX_t] = \int_{0}^{s\wedge t} f^2(u) du.$ The key part in here is to use the independent increment of the $X_t's.$ Without loss of generality, let $s < t, $ so that $s\wedge t = s$. Then 
+\[
+\ex[X_s X_t]  = \ex[X_s (X_t -X_s) + X_s^2] = 0 + \ex[X^2_s] = \int_{0}^{s\wedge t} f^2(u) du.
+\]
+The case with $s > t$ is shown in the exact same way.
+%\end{itemize}
+\end{enumerate}
+\end{document}

@@ -1,0 +1,70 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}                 
+\geometry{letterpaper}                 
+ \usepackage{graphicx}
+\usepackage{amssymb,amsmath,amsfonts}
+
+\newcommand{\rr}{{\mathbb R}}
+ \newcommand{\F}{{\mathcal F}}
+ \newcommand{\G}{{\mathcal G}}
+ \newcommand{\LL}{{\mathcal L}}
+ \newcommand{\M}{{\mathcal M}}
+ \newcommand{\pr}{{\mathbb P}}
+ \newcommand{\N}{{\mathbb N}}
+\newcommand{\ex}{{\mathbb E}}
+\newcommand{\ind}{{\mathbb I}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\B}{{\mathcal B}}
+\newcommand{\Fil}{{\mathcal F}}
+\newcommand{\T}{{\mathcal T}}
+\newcommand{\var}{{\text{Var}}}
+\newcommand{\cov}{\text{Cov}}
+\newcommand{\rto}{\Rightarrow}
+\newcommand{\e}{{\varepsilon}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\abs}[1]{\left\vert #1\right\vert}
+\newcommand{\norm}[1]{\left\| #1\right\|}
+\newcommand{\charfun}{\phi_{n_k}(\frac{t}{s_n})}
+\newcommand{\charind}{\frac{itX_{nk}}{s_n}}
+\newcommand{\poiind}{\frac{it}{\sqrt{\lambda}}}
+\newcommand{\posint}{[0,\infty]}
+\parskip=10pt
+  
+  \begin{document}
+ 
+\begin{center}
+{\bf \large MATH 873 Homework 5}
+\\
+Sami Cheong
+\\
+\today
+\end{center}
+\begin{enumerate}
+\item[1.] let $\{M_t,\F_t, 0 \leq t < \infty\} \in \M_2^c.$ Show that if $0 \leq s < t \leq r < u,$ then 
+\[
+\ex [(M_t-M_s)^2|\F_s] = \ex [M_t^2 - M_s^2|\F_s] = \ex [<M>_t - <M>_s | \F_s] \tag{1}
+\]
+\[
+\ex [(M_t-M_s)(M_u-M_r)|\F_s] = 0 \tag{2}
+\]
+Proof of (1).
+\begin{align*}
+\ex [(M_t-M_s)^2|\F_s] & =\ex [M^2_t+M^2_s - M_sM_t -M_sM_t + M_s^2 - M_s^2|\F_s]\\ 
+&=\ex [M^2_t-M_s(M_t-M_s) -M_s(M_t-M_s)- M_s^2|\F_s]\\
+&=\ex [M^2_t- M_s^2|\F_s]-2\ex[M_s(M_t-M_s)|\F_s]\\
+\intertext{But $M_s \in \F_s$ and $\{M_t\}$ is a martingale:}
+\ex [(M_t-M_s)^2|\F_s] & = \ex [M^2_t- M_s^2|\F_s]-2\ex[M_s(M_t-M_s)|\F_s]\\
+&= \ex [M^2_t- M_s^2|\F_s]-2M_s\underbrace{\ex[(M_t-M_s)|\F_s]}_{=0}\\
+&=\ex[M^2_t - M_s^2|\F_s]\\
+\intertext{Now, the process $\{M_t^2-<M>_t, 0\leq t < \infty\}$ is a martingale, so}
+\ex[M_t^2-<M>_t -(M^2_s-<M>_s)|\F_s] & =\ex[M^t_2-M^2_s -(<M>_t-<M>_s)|\F_s] = 0,
+\intertext{proving assertion (1).}
+\end{align*}
+Proof of (2).
+\begin{align*}
+\ex[(M_t-M_s)(M_u-M_r)|\F_s]& =\ex[\ex[(M_t-M_s)(M_u-M_r)|\F_r|\F_s]\\
+\intertext{Since $\F_s \subset \F_r:$}
+&=\ex[(M_t-M_s) \underbrace{\ex[M_u-M_r|\F_r]}_{=0}|\F_s] = 0.
+\end{align*}
+\end{enumerate}
+\end{document}

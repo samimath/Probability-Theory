@@ -1,0 +1,69 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}                 
+\geometry{letterpaper}                 
+ \usepackage{graphicx}
+\usepackage{amssymb,amsmath,amsfonts}
+
+\newcommand{\rr}{{\mathbb R}}
+ \newcommand{\F}{{\mathcal F}}
+ \newcommand{\G}{{\mathcal G}}
+ \newcommand{\LL}{{\mathcal L}}
+ \newcommand{\M}{{\mathcal M}}
+ \newcommand{\pr}{{\mathbb P}}
+ \newcommand{\N}{{\mathbb N}}
+\newcommand{\ex}{{\mathbb E}}
+\newcommand{\ind}{{\mathbb I}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\B}{{\mathcal B}}
+\newcommand{\Fil}{{\mathcal F}}
+\newcommand{\T}{{\mathcal T}}
+\newcommand{\var}{{\text{Var}}}
+\newcommand{\cov}{\text{Cov}}
+\newcommand{\rto}{\Rightarrow}
+\newcommand{\e}{{\varepsilon}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\abs}[1]{\left\vert #1\right\vert}
+\newcommand{\norm}[1]{\left\| #1\right\|}
+\newcommand{\charfun}{\phi_{n_k}(\frac{t}{s_n})}
+\newcommand{\charind}{\frac{itX_{nk}}{s_n}}
+\newcommand{\poiind}{\frac{it}{\sqrt{\lambda}}}
+\newcommand{\posint}{[0,\infty]}
+\parskip=10pt
+  
+  \begin{document}
+ 
+\begin{center}
+{\bf \large MATH 873 Homework 6}
+\\
+Sami Cheong
+\\
+\today
+\end{center}
+\begin{enumerate}
+\item Let $X \in \mathcal{M}^c_2$ and $T$ be a stopping time of $\{\F_t\}$. If $<X>_T = 0$ for $\pr$ a.s., then
+\[
+\pr\{ X_{T \wedge t} = 0, 0 \forall \leq t < \infty \} = 1
+\]
+\item[Pf.] Since $X \in \mathcal{M}_c^2$, consider a partition $0 = t_0 < t_1 < \dots < t_n = t,$ then 
+\begin{align*}
+\ex[X^2_t] &= \ex[(\sum_{i=1}^{n}(X_{t_i}-X_{t_{i-1}})^2]\\
+&=\sum_{i=1}^n \ex[(X_{t_i}-X_{t_{i-1}})^2] \\
+& + \sum_{i\not=j} \ex[(X_{t_i}-X_{t_{i-1}})(X_{t_j}-X_{t_{j-1}})] \tag{*}\\
+\intertext{without loss of generality, let $0 \leq t_{i-1} < t_{i} \leq t_{j-1} < t_{j}$, then from HW5, each term from (*) is 0, so}
+\ex[X^2_t] &=\sum_{i=1}^{n} \ex[(X_{t_i}-X_{t_{i-1}})^2]  = \ex[<X>_t] \tag{1}.
+\end{align*}
+Now, since $X^2_{t}- <X>_t  \in M_{c}^2$, we have that $X^2_{t\wedge T}- <X>_{t\wedge T} \in M_{c}^2$ as well by the optional sampling theorem. Moreover, since $<X>_t$ is an increasing process, $t\wedge T \leq T$ implies that 
+\[
+<X>_{t\wedge T} \hspace{2pt} \leq  \hspace{2pt}<X>_T = 0. \tag{2}
+\] 
+Thus, (1) and (2) then implies that $\ex[X^2_{t\wedge T}] = 0$, this means that for all $t>0$ we have 
+\[
+\pr \{ X_{t \wedge T} = 0 \} = 1
+\]
+In other words, $X_{t\wedge T}$ is a modification of 0, but since $X_{t\wedge T} \in \mathcal{M}_c^2$, it has right-continuous sample path a.s., thus $X_{t\wedge T}$ and 0 are indistinguishable, which give the conclusion that
+\[
+\pr \{X_{t \wedge T} = 0, \forall 0 \leq t < \infty\} =1.
+\]
+\end{enumerate}
+
+\end{document}

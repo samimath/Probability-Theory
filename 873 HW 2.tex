@@ -1,0 +1,75 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}                 
+\geometry{letterpaper}                 
+ \usepackage{graphicx}
+\usepackage{amssymb,amsmath,amsfonts}
+
+\newcommand{\rr}{{\mathbb R}}
+ \newcommand{\F}{{\mathcal F}}
+ \newcommand{\G}{{\mathcal G}}
+ \newcommand{\pr}{{\mathbb P}}
+\newcommand{\ex}{{\mathbb E}}
+\newcommand{\ind}{{\mathbb I}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\B}{{\mathcal B}}
+\newcommand{\Fil}{{\mathcal F}}
+\newcommand{\T}{{\mathcal T}}
+\newcommand{\var}{{\text{Var}}}
+\newcommand{\cov}{\text{Cov}}
+\newcommand{\rto}{\Rightarrow}
+\newcommand{\e}{{\varepsilon}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\abs}[1]{\left\vert #1\right\vert}
+\newcommand{\norm}[1]{\left\| #1\right\|}
+\newcommand{\charfun}{\phi_{n_k}(\frac{t}{s_n})}
+\newcommand{\charind}{\frac{itX_{nk}}{s_n}}
+\newcommand{\poiind}{\frac{it}{\sqrt{\lambda}}}
+\newcommand{\posint}{[0,\infty]}
+\parskip=10pt
+  
+  \begin{document}
+ 
+\begin{center}
+{\bf \large MATH 873 Homework 2}
+\\
+Sami Cheong
+\\
+\today
+\end{center}
+\begin{enumerate}
+\item[(a)] Let $X$ be an integrable random variable on $(\Omega,\F,\pr)$. Let $A = \{\G: \G \in \F\}$. Prove that $\{\ex(X|\G) : \G\in A\}$ is uniformly integrable.
+\item[\textit{Proof.}] By Jensen's inequality and property of conditional expectations:
+\begin{align*}
+|\ex(\ex(X|\G))| & \leq \ex(\ex(|X| | \G)) \\
+& = \ex(|X|) < \infty
+\intertext{Now, let $B = \{|\ex(X|\G)| > \lambda\}, \lambda > 0$, by Chebychev's inequality:}
+\pr(B ) &\leq \frac{\ex(|\ex(X|\G)|)}{\lambda} \\
+& \leq \frac{\ex(|X|)}{\lambda}
+\intertext{Since $X \in L^1$, we can see that $\pr(B) \to 0 $ as $\lambda \to \infty.$ This means that, for $\forall \epsilon > 0, $ there exists $\delta >0 $ such that} 
+\pr(B) < \delta & \implies \ex(|X|) < \epsilon
+\intertext{Therefore, if we choose $\lambda > \frac{\delta}{\ex(|X|)}$, we have $\pr(B) < \delta$, and consequently}
+\ex(|\ex(X|\G)|) & \leq \ex(|X|) < \epsilon,
+\intertext{proving uniform integrability.}
+\end{align*}
+\newpage
+\item[(b)] Let $X$ be a right-continuous $\F_t$ martingale. Let $\T$ be the collection of $\F_t$ stopping times. Show that for each $T > 0, \{ X(T\wedge \tau) :\tau \in \T\}$ is uniformly integrable.
+\item[\textit{Proof.}] Since $X$  is right-continuous, by optional sampling theorem (Theorem 3.21), we have 
+\begin{align*}
+X(\tau\wedge T) &= \ex(X_T|\F_{\tau \wedge T})
+\intertext{Now, since $|\F_{\tau \wedge T} \in \F_t$ and $T$ is a fixed number, so $X_T$ is integrable. This means that we can express $\{X(\tau\wedge T) \}$ as a class of conditional expectations. Using results from part (a), we conclude that $\{X(\tau\wedge T) \}$  is uniformly integrable.}
+\end{align*} 
+\item[(c)] Let $X$ be right-continuous, nonnegative $\F_t$ submartingale.Let $\T$ be the collection of $\F_t$ stopping times. Show that for each $T > 0, \{ X(T\wedge \tau) :\tau \in \T\}$ is uniformly integrable.
+\item[\textit{Proof.}]  Again, by 3.21, we have 
+\begin{align*}
+0 &\leq X_{\tau \wedge T} \leq \ex(X_T|\F_{\tau \wedge T})
+\intertext{Now, since $\tau \wedge T \leq T$ and $X_T$ is integrable, we have }
+\ex(X_{\tau \wedge T} I_{\{X_{\tau \wedge T}  > \lambda\}}) &\leq \ex(X_{T} I_{\{X_{\tau \wedge T}  > \lambda\}}) < \infty
+\intertext{Furthermore, note that}
+\pr(\{\tau \wedge T  > \lambda\}) &\leq \frac{\ex(X_{\tau\wedge T})}{\lambda} \\
+&\leq \frac{\ex(X_{ T})}{\lambda} \to 0 \text{ as } \lambda \to \infty
+\intertext{Similar to the proof of (a), since $X_{\tau\wedge T}$ is integrable, we have for $\forall \epsilon > 0, $ there exists $\delta > 0 $ such that  }
+\pr(\{X_{\tau \wedge T} > \lambda\}) < \delta & \implies \int_{\{X_{\tau \wedge T} > \lambda\}} X_{\tau \wedge T} d\pr < \epsilon
+\intertext{Thus, $ \{ X(T\wedge \tau) :\tau \in \T\}$ is uniformly integrable.}
+\end{align*}
+\end{enumerate}
+\end{document}

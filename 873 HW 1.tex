@@ -1,0 +1,85 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}                 
+\geometry{letterpaper}                 
+ \usepackage{graphicx}
+\usepackage{amssymb,amsmath,amsfonts}
+
+\newcommand{\rr}{{\mathbb R}}
+ \newcommand{\F}{{\mathcal F}}
+ \newcommand{\G}{{\mathcal G}}
+ \newcommand{\pr}{{\mathbb P}}
+\newcommand{\ex}{{\mathbb E}}
+\newcommand{\ind}{{\mathbb I}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\B}{{\mathcal B}}
+\newcommand{\Fil}{{\mathcal F}}
+\newcommand{\var}{{\text{Var}}}
+\newcommand{\cov}{\text{Cov}}
+\newcommand{\rto}{\Rightarrow}
+\newcommand{\e}{{\varepsilon}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\abs}[1]{\left\vert #1\right\vert}
+\newcommand{\norm}[1]{\left\| #1\right\|}
+\newcommand{\charfun}{\phi_{n_k}(\frac{t}{s_n})}
+\newcommand{\charind}{\frac{itX_{nk}}{s_n}}
+\newcommand{\poiind}{\frac{it}{\sqrt{\lambda}}}
+\newcommand{\posint}{[0,\infty]}
+\parskip=10pt
+  
+  \begin{document}
+ 
+\begin{center}
+{\bf \large MATH 873 Homework 1}
+\\
+Sami Cheong
+\\
+\today
+\end{center}
+\begin{enumerate}
+\item Let $Y$ be a modification of $X$, and suppose both processes have a.s. right-continuous sample paths. Then $X$ and $Y$ are indistinguishable.
+\item[\textit{Pf.}] We want to show that 
+\[
+\pr\{X_t = Y_t, \forall t \in \posint\} = 1
+\]
+First, let us consider the sample paths at non-negative, rational time-points, i.e. Let
+\begin{align*}
+A & = \{\omega \in \Omega: X_t(\omega) = Y_t (\omega), \forall t \in \posint \cap \Q\}\\
+\intertext{Since $\Q$ is a countable set, we can write}
+A & ={\cap}_{t \in \posint \cap \Q} \{\omega \in \Omega: X_t(\omega) = Y_t (\omega) \}\\
+\intertext{and also}
+A^c & = \cup_{t \in \posint \cap \Q} \{\omega \in \Omega: X_t(\omega) \not= Y_t (\omega) \}
+\intertext{Now, X is a modification of Y, so we have for a fixed $t$  and a.e. $\omega$, $ \pr(\{X_t \not= Y_t\}) = 0$. Moreover, since countable union of null sets is still a null set, thus}
+0\leq \pr(A^c) & \leq \sum_{t \in \posint \cap \Q}\pr (\{X_t \not= Y_t\})  = 0, \text{(countable additivity)}\\
+\intertext{which implies that $\pr(A) = 1$. This shows that $X$ and $Y$ agree on all the sample paths where $t \in \posint \cap \Q$. Also, we know that:}
+\intertext{ 1) $X$ and $Y$ are right-continuous for a.e. $\omega \in \Omega$, and }
+\intertext{ 2) $\Q$ is dense in $\rr$.}
+\intertext{Thus, if $t \in \posint \cap \Q^c,$ by 1) and 2) we can find a sequence $\{t_n\} \subset  \posint \cap \Q$ such that $t_n \to t$ from the right, and}
+X_t(\omega) &= \lim_{t_n \to t} X_{t_n}(\omega) =  \lim_{t_n \to t} Y_{t_n}(\omega) = Y_t(\omega)
+\intertext{As a result, almost all the sample paths are now accounted for, which shows that $X$ and $Y$ are indistinguishable.}
+\end{align*}
+
+\item Let $\{\Fil_t\}$ be a filtration. Show that $\{\Fil_{t^+}\}$ is right-continuous.
+\item[\textit{Pf.}] We want to show that $\Fil_{t^+} =\Fil_{t^{++}}.$ Notice that
+\begin{align*}
+\Fil_{t^{++}} & = \cap_{s > 0 }\Fil_{t^+ + s}\\
+& = \cap_{s_1 > 0}(\cap_{s>0} \Fil_{t + s + s_1})\\
+&= \cap_{s+s_1 > 0 } \Fil_{t + (s+s_1)}\\
+&= \Fil_{t^+}.
+\intertext{Thus, $ \F_{t^+}$ is right-continuous.}
+\end{align*}
+\item[3.] Let $\{\Fil_{n}, n =1,2 \dots\}$ be a decreasing sequence of sub-$\sigma$-algebras of $\Fil$ and let $\{X_{n}, \Fil_{n}\}$ be a backward submartingale. Then $l : = \lim_{n\to\infty} \ex [X_n] > -\infty$ implies that the sequence $\{X_n, n\geq 1\}$ is u.i.
+\item[\textit{Pf.}] From the properties of backward submartingale,  we know that for $\forall n \geq 1, \ex [X_n] \leq \ex [X_{n-1}] \leq \dots \leq \ex [X_1]  < \infty$, and from the given assumption of $l$, we have $ \ex[X_n] \geq l.$ Also, notice that to this end
+\begin{align*}
+\ex{[|X_n|]} & = \ex{[X_n^+]} + \ex [X_n^-] \\
+& = 2\ex{[X_n^+]} - \ex [X_n]\\
+\intertext{\textbf{Claim:} $\{X_n^{+}\}$ is a backward submartingale}
+\intertext{Proof of claim: Similar to the proof in Chung, Theorem 9.3.1, $\ex[X_n^{+}] < \infty$ is clear since $\ex[X_n^{+}] \leq \ex[|X_n|] < \infty$. Furthermore, since $(\cdot)^{+}$ is convex and increasing, Jensen's inequality implies that $X_{n+1}^{+} \leq (\ex(X_n|\Fil_{n+1}))^{+} \leq \ex(X_n^{+}|\Fil_{n+1}).$ Thus, we can now proceed to say that:}  
+\ex{[|X_n|]} &\leq  2\ex [X_1^{+}] - \ex[ X_n] \\
+&\leq \underbrace{2\ex |X_1| - l}_{\text{independent of }  n} < \infty\\
+\intertext{This implies $\sup_{n\geq 1} \ex[|X_n|] < \infty$. Moreover, by Chebychev's inequality, we have}
+\pr(\{|X_n| > K\}) &\leq \frac{\ex[|X_n|]}{K} \to 0 \text{ as } K \to \infty\\
+\intertext{As a result, we have $\lim_{K\to\infty} \sup_{n\geq 1} \int_{\{|X_n| > K\}} |X_n| d\pr = 0,$ proving uniform integrability.}
+\end{align*}
+
+\end{enumerate}
+\end{document}

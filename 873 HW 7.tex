@@ -1,0 +1,71 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}                 
+\geometry{letterpaper}                 
+ \usepackage{graphicx}
+\usepackage{amssymb,amsmath,amsfonts}
+
+\newcommand{\rr}{{\mathbb R}}
+ \newcommand{\F}{{\mathcal F}}
+ \newcommand{\G}{{\mathcal G}}
+ \newcommand{\LL}{{\mathcal L}}
+ \newcommand{\M}{{\mathcal M}}
+ \newcommand{\pr}{{\mathbb P}}
+ \newcommand{\N}{{\mathbb N}}
+\newcommand{\ex}{{\mathbb E}}
+\newcommand{\ind}{{\mathbb I}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\B}{{\mathcal B}}
+\newcommand{\Fil}{{\mathcal F}}
+\newcommand{\T}{{\mathcal T}}
+\newcommand{\var}{{\text{Var}}}
+\newcommand{\cov}{\text{Cov}}
+\newcommand{\rto}{\Rightarrow}
+\newcommand{\e}{{\varepsilon}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\abs}[1]{\left\vert #1\right\vert}
+\newcommand{\norm}[1]{\left\| #1\right\|}
+\newcommand{\charfun}{\phi_{n_k}(\frac{t}{s_n})}
+\newcommand{\charind}{\frac{itX_{nk}}{s_n}}
+\newcommand{\poiind}{\frac{it}{\sqrt{\lambda}}}
+\newcommand{\posint}{[0,\infty]}
+\parskip=10pt
+  
+  \begin{document}
+ 
+\begin{center}
+{\bf \large MATH 873 Homework 7}
+\\
+Sami Cheong
+\\
+\today
+\end{center}
+\begin{enumerate}
+\item[(i)] Show that $f(x,y,z) = (x^2+y^2+z^2)^{-1/2}$ is harmonic.
+\item[] By definition, $f$ is harmonic if $\Delta f = 0.$ 
+Since 
+\begin{align*}
+\frac{\partial }{\partial x} f(x,y,z) & = -x (x^2+y^2+z^2)^{-3/2}\\
+\frac{\partial^2 }{\partial x^2} f(x,y,z) & = -(x^2+y^2+z^2)^{-3/2} +3x^2(x^2+y^2+z^2)^{-5/2},
+\intertext{by symmetry,}
+\Delta f & = -3(x^2+y^2+z^2)^{-3/2} + 3(x^2+y^2+z^2)(x^2+y^2+z^2)^{-5/2} \\
+& = 0.
+\intertext{Thus, $f(W_t)$, where $W_t$ is a 3-d standard Brownian motion, is a local martingale.}
+\end{align*}
+\item[(2)] Since $W_t$ is normal with mean $\vec{0}$ and covariance $t I,$ and $M_t = f(W_t),$ we have
+\begin{align*}
+\ex[M_t^2] & = \int_{\rr^3} M_t^2 \frac{1}{(2\pi t)^{3/2}} \exp\{-\frac{\vec{W}_t \vec{W}'_t}{2t}\} d\vec{W}_t\\
+&=\frac{1}{(2\pi t)^{3/2}} \int_{\rr^3} M_t^2 \exp\{-\frac{\vec{W}_t \vec{W}'_t}{2t}\} d\vec{W}_t \tag{1}
+\intertext{Now, for convenience, let $t$ be fixed and denote $x= (W^{(1)}_t)$, $y= (W^{(2)}_t)$ and $ z=(W^{(3)}_t)$, and let $r = \sqrt{ x^2+y^2+z^2}$. Then $x = r \cos \theta \sin \phi$, and $y = r \sin \theta \sin \phi$, with $0 < r< \infty$, $ 0 < \theta < 2\pi$ and $0 < \phi < \pi.$ Notice that $M^2_t = \frac{1}{x^2+y^2+z^2}$, thus (1) can be expressed as: }
+\ex[M^2_t] & = \frac{1}{(2\pi t)^{3/2} } \int_{0}^{\infty} \int_{0}^{\pi} \int_{0}^{2 \pi} \frac{1}{r^2} \exp\{\frac{-r^2}{2t}\} r^2 \sin \phi d\phi d\theta dr\\
+&= \frac{1}{(2\pi t)^{3/2 } } \int_{0}^{\infty} \int_{0}^{\pi} \int_{0}^{2 \pi} e^{-r^2/2t} \sin \phi d\phi d\theta dr\\
+& = \frac{1}{(2\pi t )^{3/2} }\underbrace{ \int_{0}^{\infty} e^{-r^2/2t} dr}_{=\sqrt{2\pi t}} \underbrace{ \int_{0}^{ \pi}\sin \phi d\phi}_{=1} \underbrace{ \int_{0}^{2\pi}    d\theta }_{= 2\pi}\\
+&=\frac{\sqrt{t}}{(2\pi t)^{3/2} } (2\pi)^{3/2} =\frac{1}{t}
+\end{align*}
+\item[(iii)] Conclude that $M$ is not a martingale.
+\item[Pf.] We can see that $\ex[M_t^2] \to 0$ as $t\to \infty$. This implies that $\ex [M_t] \to 0$ as well. But if $M_t$ is a martingale, then by definition there exists some constant $c$ s.t. $\ex[M_t] = c,$ so it cannot converge to 0. Moreover, under this assumption and by Jensen's inequality (since $x^2$ is convex for $x \geq 0$),
+\[
+\ex[M^2_t] \geq (\ex[M_t])^2 = c^2 > 0,
+\]
+thus we have a contradiction to the convergence of $\ex[M^2_t]$ as well, therefore $M_t$ is not a martingale. 
+\end{enumerate}
+\end{document}

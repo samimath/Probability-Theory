@@ -1,0 +1,112 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}                 
+\geometry{letterpaper}                 
+ \usepackage{graphicx}
+\usepackage{amssymb,amsmath,amsfonts}
+
+\newcommand{\rr}{{\mathbb R}}
+ \newcommand{\F}{{\mathcal F}}
+ \newcommand{\G}{{\mathcal G}}
+ \newcommand{\LL}{{\mathcal L}}
+ \newcommand{\M}{{\mathcal M}}
+ \newcommand{\pr}{{\mathbb P}}
+ \newcommand{\N}{{\mathbb N}}
+\newcommand{\ex}{{\mathbb E}}
+\newcommand{\ind}{{\mathbb I}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\B}{{\mathcal B}}
+\newcommand{\Fil}{{\mathcal F}}
+\newcommand{\T}{{\mathcal T}}
+\newcommand{\var}{{\text{Var}}}
+\newcommand{\cov}{\text{Cov}}
+\newcommand{\rto}{\Rightarrow}
+\newcommand{\e}{{\varepsilon}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\abs}[1]{\left\vert #1\right\vert}
+\newcommand{\norm}[1]{\left\| #1\right\|}
+\newcommand{\charfun}{\phi_{n_k}(\frac{t}{s_n})}
+\newcommand{\charind}{\frac{itX_{nk}}{s_n}}
+\newcommand{\poiind}{\frac{it}{\sqrt{\lambda}}}
+\newcommand{\posint}{[0,\infty]}
+\parskip=10pt
+  
+  \begin{document}
+ 
+\begin{center}
+{\bf \large MATH 873 Homework 4}
+\\
+Sami Cheong
+\\
+\today
+\end{center}
+\begin{enumerate}
+\item Show the probability that a Brownian motion returns to the origin is 1.
+\item[\textit{Pf.}] Let $\{X_t, \F_t, 0\leq t < \infty\}$ be a Brownian motion. Since, $X_t - X_0 \sim N(0,t)$. Thus in general, if $X_0 = x$, and let $p_{t}(x,y)$ denote probability density for the event \[ \{X_t = y | X_0 = x\} = \{X_t = y-x\}\] we have 
+\begin{equation}
+p_t(x,y) =\frac{1}{\sqrt{2\pi t}} \exp\{-\frac{(y-x)^2}{2t}\}
+\end{equation}
+
+On the other hand, since prop. 4.39 already showed that a BM returns to the origin infinitely often near 0, we consider the set 
+\[ 
+Z : = \{ \omega: X_s(\omega) = 0 , 1\leq s \leq t\}
+\]
+Now, without loss of generality, suppose $X_1 = b > 0,$ then shifting the BM, we can see that 
+\[
+\pr(X_s = 0 | X_1 = b) = \pr (X_s-X_0 \leq -b ;  0 \leq s \leq t-1) = \pr(X_s \leq -b).
+\]
+Then by the reflection principle, we see that 
+\begin{equation} \label{eq2}
+\pr(X_s \leq -b,  0 \leq s \leq t-1) = 2 \pr(X_{t-1} > b),
+\end{equation}
+also, we can express (\ref{eq2}) in terms of its density:
+\begin{align*}
+\pr(X_{t-1} > b) &= \int_{b}^{\infty} \frac{1}{\sqrt{2\pi (t-1)}} \exp\{-\frac{x^2}{2(t-1)}\} dx\\
+& = \int_{\frac{b}{\sqrt{t-1}}}^{\infty}\frac{1}{\sqrt{2\pi}} e^{-y^2/2} dy.
+\intertext{Similarly, if $X_1 = -b,$ the expression for $\pr(X_s = 0 | X_1 = -b) $ will be exactly the same by symmetry and the reflection principle. Now, notice that }
+\pr(X_s = 0 ; 1 \leq s \leq t) & =\int_{-\infty}^{\infty} \pr(X_s = 0|X_1 =b) \pr(X_1 = b) db\\
+& = 2\int_{-\infty}^{-\infty} p_1(0,b) [2 \int_{b}^{\infty} \frac{1}{\sqrt{2\pi}} e^{-y^2/2}] dy db\\
+& = \frac{2}{\pi} \int_{-\infty}^{\infty} \int_{b(t-1)^{-1/2}}^{\infty} e^{-(b^2+y^2)/2} dy db 
+\intertext{by polar transformation, let $r^2 = y^2+b^2, \theta = \tan(y/b)$, we have:}
+\pr(X_s = 0 ; 1 \leq s \leq t)  & =\frac{2}{\pi}\int_{0}^{\infty} \int_{\arctan((t-1)^-1)} ^{\pi/2} e^{-r^2/2} r dr d\theta\\
+& = \frac{2}{\pi}[ \int_{\arctan((t-1)^-1)} ^{\pi/2} d\theta ] \int_{0}^{\infty} e^{-r^2/2} r dr \\
+& =\frac{2}{\pi}[\frac{\pi}{2} - \arctan(\frac{1}{\sqrt{t-1}})] [-e^{-r^2/2}|_{0}^{\infty}]\\
+& = 1 - \frac{2}{\pi}\arctan(\frac{1}{\sqrt{t-1}}) \tag{3}
+\intertext{Now, since $\arctan(x)$ is continuous at 0, and $\lim_{t\to\infty} \arctan(\frac{1}{\sqrt{t-1}})  = 0$ , we can see that 
+$\lim_{t\to\infty} \pr(X_s = 0 ; 1 \leq s \leq t)  = 1$, this shows that the probability that $X_t$ eventually returns to the origin is 1.}
+\end{align*}
+
+\item Let $\{\Pi_{n}, n =1,2,\dots\}$ be a sequence of partitions of $[0,t]$ with $\lim_{n \to \infty}\| \Pi_n\| = 0.$ Then the quadratic variations 
+\[
+V^{(2)}_{t} : = \sum_{k=1}^{m_n} |W_{t^{(n)}_k} - W_{t^{(n)}_{k-1}}|^2
+\]
+ of the Brownian motion $W$ over these partitions converge to $t$ in $L^2$, as $n \to \infty.$ If, furthermore, the partition become so fine that $\sum_{n=1}^{\infty}\|\Pi_n\| < \infty $ holds, the proceeding convergence takes place also with probability one. 
+ \item[\textit{Pf.}] Let $Q_n : = V^{(2)}_t$, and $q^{n}_k = W_{t^{(n)}_k} - W_{t^{(n)}_{k-1}}.$ First, since $q^{n}_{k} \sim N(0, t_{k}-t_{k-1})$:
+  \[ 
+ \ex(Q_n) = \sum_{k=1}^{m_n} (t_k-t_{k-1} ) =t
+ \]
+We want to show that 1) $\lim_{n\to \infty}\ex(Q_n - t)^2 = 0 $  and 2) $\pr(\lim_{n\to\infty}(Q_n - t) \to 0) = 1$ if  $\sum_{n=1}^{\infty}\|\Pi_n\| < \infty $. 
+\item[(1)] Since $E(Q_n) = t,$ to show 1) is true it is equivalent to showing that $Var(Q_n) \to 0.$ A few observations:
+\begin{itemize}
+\item $q_k = \sqrt{t_k-t_{k-1}} Z,$ where $Z \sim N(0,1)$
+\item From moment generating function, we have : $\ex(Z^{2n}) = \frac{(2n)!}{n! 2^{n}}.$, which implies : $\ex(Z^4) = 3, \ex(Z^2) = 1.$ 
+\end{itemize}
+Thus
+\begin{align*}
+Var(q^2_k) &= \ex(q^4_k) - [\ex(q^2_k)]^2 \\ 
+& = (t_k - t_{k-1})^2\ex(Z^4) - [(t_k - t_{k-1}\ex(Z^2)]^2\\
+&=2(t_{k}-t_{k-1})^2.
+\intertext{Then by independence:}
+Var(Q_n) & =2 \sum_{k=1}^{m_n}(t_{k}-t_{k-1})^2 \tag{4}\\ 
+&\leq 2 \|\Pi_n\| \sum_{k=1}^{m_n}(t_{k}-t_{k-1})\\
+&=2 \|\Pi_n\| t
+\intertext{but since we have $\lim_{n\to 0} \|\Pi_n\| = 0,$ this implies (4) converges to 0. Thus $Q_n \to t$ in $L^2.$}
+\end{align*}
+\item[(2)] We want to show that $\lim_{n\to \infty} Q_n - t = 0.$ a.e. Since $\sum{\|\Pi_n\|} < \infty,$ this means that each of $\|\Pi_n\|$ can be approximated by $\epsilon_n/2^n$ where $\{\epsilon_n\}$ is some sequence converging to zero. As a result, we can choose such sequence $\{\epsilon_n\}$, and by Markov's inequality:
+\begin{align*}
+\pr(|Q_n - t|^2 > \epsilon_n ) & \leq \frac{\var(Q_n)}{\epsilon_n}\\
+& \leq \frac{2\|\Pi_n\| t }{\|\Pi_n\|2^n} =\frac{t}{2^{n-1}}.
+\intertext{This implies that $\sum_{n=1}^{\infty} \pr(|Q_n - t|^2 > \epsilon_n )  < \infty $, so Borel-Cantelli Lemma implies that, almost surely $\lim_{n\to \infty} (Q_n - t)^2 = 0,$ which implies $\lim_{n\to \infty} (Q_n - t) = 0$ as well.}
+\end{align*}
+
+\end{enumerate}
+\end{document}
